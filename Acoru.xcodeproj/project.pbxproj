@@ -3,13 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		6C1838722C9B571E005D1F9D /* AcoruApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C1838712C9B571E005D1F9D /* AcoruApp.swift */; };
 		6C1838742C9B571E005D1F9D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C1838732C9B571E005D1F9D /* ContentView.swift */; };
-		6C1838762C9B571F005D1F9D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6C1838752C9B571F005D1F9D /* Assets.xcassets */; };
 		6C1838792C9B571F005D1F9D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6C1838782C9B571F005D1F9D /* Preview Assets.xcassets */; };
 /* End PBXBuildFile section */
 
@@ -17,9 +16,16 @@
 		6C18386E2C9B571E005D1F9D /* Acoru.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Acoru.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6C1838712C9B571E005D1F9D /* AcoruApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcoruApp.swift; sourceTree = "<group>"; };
 		6C1838732C9B571E005D1F9D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		6C1838752C9B571F005D1F9D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6C1838782C9B571F005D1F9D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		4D1EF7592CBDB41B00E60752 /* Agrosivicultura */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Agrosivicultura; sourceTree = "<group>"; };
+		4D724E632CBDB6FC000D9234 /* General */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = General; sourceTree = "<group>"; };
+		4DA497A42CBDAD52009F1264 /* Resources */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Resources; sourceTree = "<group>"; };
+		4DA497AA2CBDAD66009F1264 /* ChatBox */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ChatBox; sourceTree = "<group>"; };
+		4DA996DA2CBCB41100B35F96 /* Viviendas */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Viviendas; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		6C18386B2C9B571E005D1F9D /* Frameworks */ = {
@@ -35,8 +41,8 @@
 		6C1838652C9B571E005D1F9D = {
 			isa = PBXGroup;
 			children = (
-				6C1838702C9B571E005D1F9D /* Acoru */,
 				6C18386F2C9B571E005D1F9D /* Products */,
+				6C1838702C9B571E005D1F9D /* Acoru */,
 			);
 			sourceTree = "<group>";
 		};
@@ -51,10 +57,14 @@
 		6C1838702C9B571E005D1F9D /* Acoru */ = {
 			isa = PBXGroup;
 			children = (
+				4D724E632CBDB6FC000D9234 /* General */,
+				4D1EF7592CBDB41B00E60752 /* Agrosivicultura */,
+				4DA996DA2CBCB41100B35F96 /* Viviendas */,
 				6C1838712C9B571E005D1F9D /* AcoruApp.swift */,
 				6C1838732C9B571E005D1F9D /* ContentView.swift */,
-				6C1838752C9B571F005D1F9D /* Assets.xcassets */,
 				6C1838772C9B571F005D1F9D /* Preview Content */,
+				4DA497A42CBDAD52009F1264 /* Resources */,
+				4DA497AA2CBDAD66009F1264 /* ChatBox */,
 			);
 			path = Acoru;
 			sourceTree = "<group>";
@@ -81,6 +91,13 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				4D1EF7592CBDB41B00E60752 /* Agrosivicultura */,
+				4D724E632CBDB6FC000D9234 /* General */,
+				4DA497A42CBDAD52009F1264 /* Resources */,
+				4DA497AA2CBDAD66009F1264 /* ChatBox */,
+				4DA996DA2CBCB41100B35F96 /* Viviendas */,
 			);
 			name = Acoru;
 			productName = Acoru;
@@ -126,7 +143,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				6C1838792C9B571F005D1F9D /* Preview Assets.xcassets in Resources */,
-				6C1838762C9B571F005D1F9D /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
