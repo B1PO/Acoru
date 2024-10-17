@@ -34,30 +34,38 @@ struct cartaComponentVV<Destination: View>: View {
             
             // Barra azul que cubre el botón cuando está activa
             if isActive {
-                ZStack {
-                    // Rectángulo de fondo más pequeño en altura
-                    Rectangle()
-                        .fill(Color.white)
-                        .frame(width: 300, height: 90)
-                        .cornerRadius(40)
-                        .transition(.opacity)
-
-                    // Rectángulo principal (barra visible)
-                    Rectangle()
-                        .fill(Color.white)
-                        .frame(width: 300, height: 60)
-                        .overlay(
-                            HStack{
-                                Text(textBarra)
-                                    .foregroundColor(.black)
-                                    .padding(.leading, 15).font(.callout)
-                                Spacer()
-                            }
-                        )
-                        .offset(y: -20)
-                        .transition(.slide)
-                }
-                .animation(.easeInOut, value: isActive)  // Animación para la barra azul
+                VStack {
+                                        ZStack {
+                                            // Fondo blanco con esquinas redondeadas
+                                            Rectangle()
+                                                .fill(Color.white)
+                                                .frame(width: 300, height: 110)
+                                                .clipShape(esquinasRedondeadasComponentVV(radius: 40, corners: [.bottomLeft, .bottomRight]))
+                                                .overlay(
+                                                    HStack {
+                                                        Text(textBarra)
+                                                            .foregroundColor(.black)
+                                                            .padding(.leading, 15)
+                                                            .font(.callout)
+                                                        Spacer()
+                                                    }
+                                                )
+                                        }
+                                        
+                                        // Botón verde dentro del recuadro blanco
+                                        Button(action: {
+                                            toggleState()
+                                        }) {
+                                            Text("Presiona aquí")
+                                                .font(.headline)
+                                                .foregroundColor(.white)
+                                                .padding()
+                                                .background(Color.green)
+                                                .cornerRadius(15)
+                                                .shadow(radius: 5)  // Sombra suave
+                                        }
+                                        .padding(.top, -45)  // Ajusta el espacio para colocarlo mejor debajo del texto
+                                    }  // Animación para la barra azul
             }
           
                 
@@ -77,4 +85,9 @@ struct cartaComponentVV<Destination: View>: View {
             isActive.toggle()  // Cambia el estado de isActive
         }
     }
+    
+    
 }
+
+
+
