@@ -16,12 +16,12 @@ struct Icon: Identifiable {
 }
 
 // Componente Picker dinámico horizontal
-struct HorizontalIconPickerView: View {
+struct PickerComponent: View {
     
     // Propiedades
     @State private var selectedIconId: Int // ID del icono seleccionado
     @State private var hStackColor: UIColor
-    @State private var backgroundOffset: CGFloat = 16 // Posición del fondo
+    @State private var backgroundOffset: CGFloat = 8 // Posición del fondo
     let icons: [Icon] // Lista de iconos
     let onIconSelected: (
         Int
@@ -86,9 +86,9 @@ struct HorizontalIconPickerView: View {
                                     // Contenido del botón
                                     Image(icon.name)
                                         .resizable()
-                                        .frame(width: 45, height: 45)
+                                        .frame(width: 32, height: 32)
                                         .opacity(
-                                            selectedIconId == icon.id ? 1 : 0.4
+                                            selectedIconId == icon.id ? 1 : 0.8
                                         )
                                 }
                                     
@@ -96,8 +96,8 @@ struct HorizontalIconPickerView: View {
                                     PlainButtonStyle()
                                 ) // Evitar que el botón cambie de estilo por defecto
                                 .frame(
-                                    width: 70,
-                                    height: 70
+                                    width: 64,
+                                    height: 64
                                 ) // Botón de 64x64
                                 .background(Color.clear)
                                 .clipShape(
@@ -106,23 +106,24 @@ struct HorizontalIconPickerView: View {
                                 .position(
                                     x: buttonGeometry.size.width / 2,
                                     y: buttonGeometry.size.height / 2
-                                ) // Alineación centrada
+                                ) 
                         }
                         .frame(
-                            width: 70,
-                            height: 70
+                            width: 64,
+                            height: 64
                         ) // Asegura que GeometryReader no ocupe más espacio
+                        
                     }
                 }
-                .padding()
+                .padding(8)
                 .background(Color(hStackColor))
                 .clipShape(RoundedRectangle(cornerRadius: 18))
 
                 Rectangle()
                     .fill(Color.white.opacity(0.5))
                     .frame(
-                        width: 70,
-                        height: 70
+                        width: 64,
+                        height: 64
                     ) // Ajustar tamaño al de los botones
                     .clipShape(
                         RoundedRectangle(
@@ -135,16 +136,7 @@ struct HorizontalIconPickerView: View {
                         .easeInOut(duration: 0.3),
                         value: backgroundOffset
                     )
-                    .onAppear {
-                        DispatchQueue.main.async {
-                            // Calculamos la posición inicial del primer botón
-                            backgroundOffset = geometry
-                                .frame(in: .global).minX
-                            print(
-                                "Posición inicial del fondo: \(backgroundOffset)"
-                            )
-                        }
-                    }
+                    
 
                         
             }
@@ -181,11 +173,10 @@ struct ContentView2: View {
                 .font(.largeTitle)
             
             // Llamada al HorizontalIconPickerView con una lista de iconos y un callback
-            HorizontalIconPickerView(icons: icons) { selectedId in
+            PickerComponent(icons: icons) { selectedId in
                 // Aquí puedes manejar el icono seleccionado externamente
                 print("Icono seleccionado con ID: \(selectedId)")
             }
-            .padding()
         }
     }
 }

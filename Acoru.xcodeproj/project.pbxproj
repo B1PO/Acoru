@@ -13,7 +13,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		6C18386E2C9B571E005D1F9D /* Acoru.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Acoru.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		296889D22CC1BA2D00CBFC02 /* Acoru.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Acoru.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		296889D32CC1BA3300CBFC02 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		6C1838712C9B571E005D1F9D /* AcoruApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcoruApp.swift; sourceTree = "<group>"; };
 		6C1838732C9B571E005D1F9D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		6C1838782C9B571F005D1F9D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -42,22 +43,15 @@
 		6C1838652C9B571E005D1F9D = {
 			isa = PBXGroup;
 			children = (
-				6C18386F2C9B571E005D1F9D /* Products */,
 				6C1838702C9B571E005D1F9D /* Acoru */,
+				296889D22CC1BA2D00CBFC02 /* Acoru.app */,
 			);
-			sourceTree = "<group>";
-		};
-		6C18386F2C9B571E005D1F9D /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				6C18386E2C9B571E005D1F9D /* Acoru.app */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		6C1838702C9B571E005D1F9D /* Acoru */ = {
 			isa = PBXGroup;
 			children = (
+				296889D32CC1BA3300CBFC02 /* Info.plist */,
 				4D724EA02CBDBB47000D9234 /* ZonasRiesgo */,
 				4D724E632CBDB6FC000D9234 /* General */,
 				4D1EF7592CBDB41B00E60752 /* Agrosivicultura */,
@@ -104,7 +98,7 @@
 			);
 			name = Acoru;
 			productName = Acoru;
-			productReference = 6C18386E2C9B571E005D1F9D /* Acoru.app */;
+			productReference = 296889D22CC1BA2D00CBFC02 /* Acoru.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -131,7 +125,7 @@
 				Base,
 			);
 			mainGroup = 6C1838652C9B571E005D1F9D;
-			productRefGroup = 6C18386F2C9B571E005D1F9D /* Products */;
+			productRefGroup = 6C1838652C9B571E005D1F9D;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -294,7 +288,8 @@
 				DEVELOPMENT_TEAM = ZKS2NRWRZN;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSCameraUsageDescription = "$(MARKETING_VERSION)";
+				INFOPLIST_FILE = Acoru/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = 1.0;
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -325,7 +320,8 @@
 				DEVELOPMENT_TEAM = ZKS2NRWRZN;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSCameraUsageDescription = "$(MARKETING_VERSION)";
+				INFOPLIST_FILE = Acoru/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = 1.0;
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
