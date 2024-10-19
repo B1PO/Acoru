@@ -8,17 +8,18 @@
 import SwiftUI
 
 struct ContentView: View {
-    var body: some View {
-        VStack {
-            Text("Tap para cambiar estado")
-                .font(.title2)
-                .padding()
+    @EnvironmentObject var authViewModel: GoogleSignInViewModel
 
-            // Uso del componente CartaComponentVV
-            
+    var body: some View {
+        Group {
+            if authViewModel.isAuthenticated {
+                ViviendasViewVV()
+            } else {
+                LoginView()
+            }
         }
-        .padding()
+        .onAppear {
+            authViewModel.checkAuthentication()
+        }
     }
 }
-
-
