@@ -12,7 +12,7 @@ import SwiftUI
 struct Icon: Identifiable {
     let id: Int
     let name: String
-    let themeColor: UIColor
+    let themeColor: ColorVariant
 }
 
 // Componente Picker dinámico horizontal
@@ -39,7 +39,7 @@ struct PickerComponent: View {
             initialValue: icons
                 .first(
                     where: { $0.id == selectedIconId
-                    })?.themeColor ?? UIColor.gray
+                    })?.themeColor.normal ?? UIColor.gray
         )
         self.onIconSelected = onIconSelected
     }
@@ -79,7 +79,7 @@ struct PickerComponent: View {
                                                     duration: 0.3
                                                 )
                                             ) {
-                                                hStackColor = icon.themeColor
+                                                hStackColor = icon.themeColor.normal
                                             }
                                         }
                                 }) {
@@ -118,7 +118,6 @@ struct PickerComponent: View {
                 .padding(8)
                 .background(Color(hStackColor))
                 .clipShape(RoundedRectangle(cornerRadius: 18))
-
                 Rectangle()
                     .fill(Color.white.opacity(0.5))
                     .frame(
@@ -136,51 +135,9 @@ struct PickerComponent: View {
                         .easeInOut(duration: 0.3),
                         value: backgroundOffset
                     )
-                    
-
-                        
             }
         }
-       
+        .frame(maxWidth: 230,maxHeight: 80)
     }
 }
 
-// Ejemplo de uso
-struct ContentView2: View {
-    
-    // Lista de iconos disponibles poner color #A1D79C en hexadecimal
-    let icons = [
-        Icon(
-            id: 0,
-            name: "Gota",
-            themeColor: UIColor(red: 0.63, green: 0.84, blue: 0.61, alpha: 1.00)
-        ),
-        Icon(
-            id: 1,
-            name: "Trash",
-            themeColor: UIColor(red: 0.18, green: 0.65, blue: 0.87, alpha: 1.00)
-        ),
-        Icon(
-            id: 2,
-            name: "Electricidad",
-            themeColor: UIColor(red: 0.99, green: 0.76, blue: 0.35, alpha: 1.00)
-        )
-    ]
-    
-    var body: some View {
-        VStack {
-            Text("Icon Picker")
-                .font(.largeTitle)
-            
-            // Llamada al HorizontalIconPickerView con una lista de iconos y un callback
-            PickerComponent(icons: icons) { selectedId in
-                // Aquí puedes manejar el icono seleccionado externamente
-                print("Icono seleccionado con ID: \(selectedId)")
-            }
-        }
-    }
-}
-
-#Preview {
-    ContentView2()
-}

@@ -12,55 +12,51 @@ struct viviendasViewVV: View {
         Icon(
             id: 0,
             name: "Gota",
-            themeColor: UIColor(red: 0.63, green: 0.84, blue: 0.61, alpha: 1.00)
+            themeColor: ColorPaletteVV.agua
         ),
         Icon(
             id: 1,
             name: "Trash",
-            themeColor: UIColor(red: 0.18, green: 0.65, blue: 0.87, alpha: 1.00)
+            themeColor: ColorPaletteVV.residuos
         ),
         Icon(
             id: 2,
             name: "Electricidad",
-            themeColor: UIColor(red: 0.99, green: 0.76, blue: 0.35, alpha: 1.00)
+            themeColor: ColorPaletteVV.electricidad
         )
     ]
+    
+    @State private var currentThemeColor: ColorVariant = ColorPaletteVV.agua
+    
     
     var body: some View {
         ZStack(alignment: .top) {
             // Fondo degradado
             Rectangle()
-                .foregroundColor(.clear)
-                .background(
-                    Rectangle()
-                        .foregroundColor(.clear)
-                        .background(
-                            LinearGradient(
-                                stops: [
-                                    Gradient
-                                        .Stop(
-                                            color: Color(
-                                                red: 0.42,
-                                                green: 0.8,
-                                                blue: 1
-                                            ),
-                                            location: 0.00
-                                        ),
-                                    Gradient
-                                        .Stop(
-                                            color: Color(
-                                                red: 0.76,
-                                                green: 0.91,
-                                                blue: 1
-                                            ),
-                                            location: 0.25
-                                        ),
-                                ],
-                                startPoint: UnitPoint(x: 0.5, y: 0),
-                                endPoint: UnitPoint(x: 0.5, y: 1)
-                            )
-                        )
+                .fill(
+                    LinearGradient(
+                        stops: [
+                            Gradient.Stop(color:
+                                            Color(currentThemeColor.normal)
+                                          , location: 0.00),
+                            Gradient
+                                .Stop(
+                                    color: lighterColor(
+                                        color:
+                                            Color(
+                                                currentThemeColor.normal
+                                            )
+                                        ,
+                                        percentage: 0.3
+                                    ),
+                                    location: 0.25
+                                )
+                        ],
+                        startPoint: UnitPoint(x: 0.5, y: 0),
+                        endPoint: UnitPoint(x: 0.5, y: 1)
+                    )
                 )
+                .foregroundColor(.clear)
             VStack(alignment: .leading, spacing: 40) {
                 // Flecha de regreso
                 HStack {
@@ -97,12 +93,15 @@ struct viviendasViewVV: View {
                 // Recuadro blanco con bordes redondeados
                 ZStack() {
                     Rectangle()
-                        .fill(Color.white)
+                        .fill(Color(red: 0.96, green: 0.97, blue: 0.99))
                         .cornerRadius(50, corners: [.topLeft, .topRight])
                         .shadow(radius: 10)
                     
-                    VStack(){
-                        HStack(){
+                    VStack(
+                        alignment: .leading,
+                        spacing: 40
+                    ){
+                        HStack(alignment: .top){
                             VStack(alignment: .leading){
                                 HStack(spacing: 0){
                                     Text("Elige un ")
@@ -126,27 +125,59 @@ struct viviendasViewVV: View {
                                 }
                                 PickerComponent(icons: icons){ selectedId in
                                     // Aquí puedes manejar el icono seleccionado externamente
-                                    print(
-                                        "Icono seleccionado con ID: \(selectedId)"
-                                    )
+                                    //dependiendo
+                                    switch(selectedId){
+                                    case 0:
+                                        currentThemeColor = ColorPaletteVV.agua
+                                        break;
+                                    case 1:
+                                        currentThemeColor = ColorPaletteVV.residuos
+                                        break;
+                                    case 2:
+                                        currentThemeColor = ColorPaletteVV.electricidad
+                                        break;
+                                    default :
+                                        currentThemeColor = ColorPaletteVV.agua
+                                    }
+                                    
                                 }
                             }
-                            VStack(){
-                                
+                            .frame(maxWidth: .infinity,alignment: .leading)
+                            VStack(alignment: .trailing, spacing: 30){
+                                Text("Instalaciones hechas ")
+                                    .font(
+                                        customFont(
+                                            "Poppins",
+                                            size: 14,
+                                            weight: .medium
+                                        )
+                                    )
+                                    .foregroundColor(.black)
+                                ProgresoComponent(themeColor: $currentThemeColor)
                             }
+                            .frame(maxWidth: .infinity, alignment: .trailing)
+                            
                         }
-                        HStack(){
-                            cartaComponentVV(
+                        HStack(
+                            spacing: 40
+                        ){
+                            CartaComponentVV(
                                 titulo: "Evaluador",
-                                descripcion: "Revisa la compatibilidad de tu casa con la ecotecnología."
+                                descripcion: "Revisa la compatibilidad de tu casa con la ecotecnología.",
+                                themeColor: $currentThemeColor,
+                                cartaDirection: .right
                             )
-                            cartaComponentVV(
-                                titulo: "Evaluador",
-                                descripcion: "Revisa la compatibilidad de tu casa con la ecotecnología."
+                            CartaComponentVV(
+                                titulo: "Simulador",
+                                descripcion: "Revisa la compatibilidad de tu casa con la ecotecnología.",
+                                themeColor: $currentThemeColor,
+                                cartaDirection: .center
                             )
-                            cartaComponentVV(
-                                titulo: "Evaluador",
-                                descripcion: "Revisa la compatibilidad de tu casa con la ecotecnología."
+                            CartaComponentVV(
+                                titulo: "Instalación",
+                                descripcion: "Revisa la compatibilidad de tu casa con la ecotecnología.",
+                                themeColor: $currentThemeColor,
+                                cartaDirection: .left
                             )
                             
                         }
