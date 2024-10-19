@@ -171,7 +171,9 @@ struct ViviendasViewVV: View {
                                     descripcion: "Revisa la compatibilidad de tu casa con la ecotecnología.",
                                     themeColor: $currentThemeColor,
                                     cardPosition: .right,
-                                    onActionTriggered: {}
+                                    onActionTriggered: {
+                                        path.append("EvaluadorView")
+                                    }
                                 )
                                 
                                 CartaComponentVV(
@@ -180,6 +182,7 @@ struct ViviendasViewVV: View {
                                     themeColor: $currentThemeColor,
                                     cardPosition: .center,
                                     onActionTriggered: {
+                                        path.append("SimuladorView")
                                     }
                                 )
                                 CartaComponentVV(
@@ -189,7 +192,7 @@ struct ViviendasViewVV: View {
                                     cardPosition: .left,
                                     onActionTriggered: {
                                         //console
-                                        path.append("si")
+                                        path.append("InstaladorView")
                                     }
                                 )
                                 
@@ -204,6 +207,11 @@ struct ViviendasViewVV: View {
                 .padding(.top, 10)
             }
             .ignoresSafeArea()
+            .navigationDestination(for: String.self){ destination in
+                if(destination == "InstaladorView"){
+                    InstaladorView(path: $path)
+                }
+            }
         }
     }
 }

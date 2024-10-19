@@ -8,17 +8,16 @@
 
 import SwiftUI
 
-struct InstaladorView: View, Hashable {
+struct InstaladorView: View{
+    @Binding var path: NavigationPath // Pila de navegación
     var body: some View {
-        VStack {
-            Image("Gota")
-                .resizable()
-                .frame(width:200, height:200)
+        ZStack {
         }
-        .background(Color.black.opacity(0.5))
+        .background(Color.red.opacity(0.5))
+        .navigationBarBackButtonHidden(true)
     }
 }
 
 #Preview {
-    InstaladorView()
+    InstaladorView(path: .constant(NavigationPath()))
 }

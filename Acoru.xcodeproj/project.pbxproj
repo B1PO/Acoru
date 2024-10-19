@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		29AB17EB2CC42366002FDF4D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 29AB17EA2CC42366002FDF4D /* GoogleService-Info.plist */; };
+		29AB17EE2CC424CA002FDF4D /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 29AB17ED2CC424CA002FDF4D /* FirebaseAnalytics */; };
 		6C1838722C9B571E005D1F9D /* AcoruApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C1838712C9B571E005D1F9D /* AcoruApp.swift */; };
 		6C1838742C9B571E005D1F9D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C1838732C9B571E005D1F9D /* ContentView.swift */; };
 		6C1838792C9B571F005D1F9D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6C1838782C9B571F005D1F9D /* Preview Assets.xcassets */; };
@@ -15,6 +17,7 @@
 /* Begin PBXFileReference section */
 		2909F6EF2CC388D700329123 /* Acoru.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Acoru.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		296889D32CC1BA3300CBFC02 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		29AB17EA2CC42366002FDF4D /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		6C1838712C9B571E005D1F9D /* AcoruApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcoruApp.swift; sourceTree = "<group>"; };
 		6C1838732C9B571E005D1F9D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		6C1838782C9B571F005D1F9D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -34,6 +37,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				29AB17EE2CC424CA002FDF4D /* FirebaseAnalytics in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -61,6 +65,7 @@
 				6C1838772C9B571F005D1F9D /* Preview Content */,
 				4DA497A42CBDAD52009F1264 /* Resources */,
 				4DA497AA2CBDAD66009F1264 /* ChatBox */,
+				29AB17EA2CC42366002FDF4D /* GoogleService-Info.plist */,
 			);
 			path = Acoru;
 			sourceTree = "<group>";
@@ -125,6 +130,9 @@
 				Base,
 			);
 			mainGroup = 6C1838652C9B571E005D1F9D;
+			packageReferences = (
+				29AB17EC2CC424CA002FDF4D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			productRefGroup = 6C1838652C9B571E005D1F9D;
 			projectDirPath = "";
 			projectRoot = "";
@@ -140,6 +148,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6C1838792C9B571F005D1F9D /* Preview Assets.xcassets in Resources */,
+				29AB17EB2CC42366002FDF4D /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -369,6 +378,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		29AB17EC2CC424CA002FDF4D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.3.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		29AB17ED2CC424CA002FDF4D /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 29AB17EC2CC424CA002FDF4D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 6C1838662C9B571E005D1F9D /* Project object */;
 }
