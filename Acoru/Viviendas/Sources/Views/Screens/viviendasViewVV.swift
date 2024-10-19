@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct viviendasViewVV: View {
+struct ViviendasViewVV: View {
     let icons = [
         Icon(
             id: 0,
@@ -165,19 +165,19 @@ struct viviendasViewVV: View {
                                 titulo: "Evaluador",
                                 descripcion: "Revisa la compatibilidad de tu casa con la ecotecnología.",
                                 themeColor: $currentThemeColor,
-                                cartaDirection: .right
+                                cardPosition: .right
                             )
                             CartaComponentVV(
                                 titulo: "Simulador",
                                 descripcion: "Revisa la compatibilidad de tu casa con la ecotecnología.",
                                 themeColor: $currentThemeColor,
-                                cartaDirection: .center
+                                cardPosition: .center
                             )
                             CartaComponentVV(
                                 titulo: "Instalación",
                                 descripcion: "Revisa la compatibilidad de tu casa con la ecotecnología.",
                                 themeColor: $currentThemeColor,
-                                cartaDirection: .left
+                                cardPosition: .left
                             )
                             
                         }
@@ -198,6 +198,6 @@ struct viviendasViewVV: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        viviendasViewVV()
+        ViviendasViewVV()
     }
 }

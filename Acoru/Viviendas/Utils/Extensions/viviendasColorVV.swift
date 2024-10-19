@@ -28,7 +28,7 @@ struct ColorPaletteVV {
             alpha: 1.00
         ),
         darkMedium: UIColor(
-            red: 0.49, green: 0.76, blue: 0.46, alpha: 1.00)
+            red: 0.49, green: 0.76, blue: 0.46, alpha: 0.29)
     )
     static let residuos = ColorVariant (
         normal : UIColor(
@@ -43,7 +43,7 @@ struct ColorPaletteVV {
                 alpha: 1.00
             ),
         darkMedium: UIColor(
-            red: 0.18, green: 0.65, blue: 0.87, alpha: 1.00)
+            red: 0.18, green: 0.65, blue: 0.87, alpha: 0.29)
     )
     static let electricidad = ColorVariant (
         // Color para "Trash"
@@ -62,7 +62,7 @@ struct ColorPaletteVV {
         ),
         darkMedium: UIColor(
             red: 0.99, green: 0.66, blue: 0.35,
-            alpha: 1.00)
+            alpha: 0.29)
     )
     
 }

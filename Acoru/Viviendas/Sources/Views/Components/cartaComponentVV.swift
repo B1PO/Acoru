@@ -1,10 +1,40 @@
 import SwiftUI
 
-enum CartaDirection {
+enum CartaCirclesPosition {
     case left
     case right
     case center
 }
+
+struct CartaCircles {
+    var basePositions: [CartaCirclesPosition: CGPoint]
+    var expandedPositions: [CartaCirclesPosition: CGPoint]
+    var baseWidth: [CartaCirclesPosition: CGFloat]
+    var expandedWidth: [CartaCirclesPosition: CGFloat]
+}
+
+func cardAlignment(_ position: CartaCirclesPosition) -> HorizontalAlignment {
+    switch position {
+    case .left:
+        return .trailing
+    case .right:
+        return .leading
+    case .center:
+        return .center
+    }
+}
+
+func cardAlignmentText(_ position: CartaCirclesPosition) -> TextAlignment {
+    switch position {
+    case .left:
+        return .trailing
+    case .right:
+        return .leading
+    case .center:
+        return .center
+    }
+}
+
 
 
 struct CartaComponentVV: View {
@@ -15,18 +45,125 @@ struct CartaComponentVV: View {
     @Binding var themeColor: ColorVariant
     @State var onExpand: Bool = false
     @State var colorText = Color.black
-    @State var cartaDirection: CartaDirection;
+    @State var cardPosition: CartaCirclesPosition
+    
+    @State var circlesPositions: [CartaCircles] = [
+        CartaCircles(
+            basePositions: [
+                .left: CGPoint(x: 200, y: 260),
+                .center: CGPoint(x: 320, y: 180),
+                .right: CGPoint(x: 320, y: 100)
+            ],
+            expandedPositions: [
+                .left: CGPoint(x: 320, y: 240),
+                .center: CGPoint(x: 320, y: 160),
+                .right: CGPoint(x: 340, y: 100)
+            ],
+            baseWidth: [
+                .left: 200,
+                .right: 200,
+                .center: 200
+            ],
+            expandedWidth: [
+                .left: 200,
+                .center: 200,
+                .right: 200
+            ]
+        ),
+        CartaCircles(
+            basePositions: [
+                .left: CGPoint(x: 50, y: 250),
+                .center: CGPoint(x: 165, y: 260),
+                .right: CGPoint(x: 270, y: 250)
+            ],
+            expandedPositions: [
+                .left: CGPoint(x: 140, y: 340),
+                .center: CGPoint(x: 170, y: 300),
+                .right: CGPoint(x: 200, y: 340)
+            ],
+            baseWidth: [
+                .left: 340,
+                .right: 340,
+                .center: 300
+            ],
+            expandedWidth: [
+                .left: 450,
+                .center: 400,
+                .right: 500
+            ]
+        ),
+        CartaCircles(
+            basePositions: [
+                .left: CGPoint(x: 290, y: 0),
+                .center: CGPoint(x: 15, y: 220),
+                .right: CGPoint(x: 15, y: 220)
+            ],
+            expandedPositions: [
+                .left: CGPoint(x: 290, y: 0),
+                .center: CGPoint(x: 30, y: 320),
+                .right: CGPoint(x: 15, y: 320)
+            ],
+            baseWidth: [
+                .left: 80,
+                .right: 80,
+                .center: 80
+            ],
+            expandedWidth: [
+                .left: 160,
+                .center: 100,
+                .right: 100
+            ]
+        )
+    ]
+    
     
     var body: some View {
         ZStack(alignment: .topLeading) {
             Circle()
-                .fill(Color(themeColor.darkMedium))
-                .frame(width: 340, height: 340)
-                .position(x: 270, y: 250)
+                .stroke(Color(themeColor.darkMedium), lineWidth: 40)
+                .frame(
+                    width: onExpand ? circlesPositions[0]
+                        .expandedWidth[cardPosition]! : circlesPositions[0]
+                        .baseWidth[cardPosition]!,
+                    height: onExpand ? circlesPositions[0]
+                        .expandedWidth[cardPosition]!  : circlesPositions[0]
+                        .baseWidth[cardPosition]!
+                )
+                .position(
+                    onExpand ? circlesPositions[0]
+                        .expandedPositions[cardPosition]! : circlesPositions[0]
+                        .basePositions[cardPosition]!
+                )
             Circle()
                 .fill(Color(themeColor.dark))
-                .frame(width: 340, height: 340)
-                .position(x: 270, y: 250)
+                .frame(
+                    width: onExpand ? circlesPositions[1]
+                        .expandedWidth[cardPosition]!: circlesPositions[1]
+                        .baseWidth[cardPosition]!,
+                    height: onExpand ? circlesPositions[1]
+                        .expandedWidth[cardPosition]! : circlesPositions[1]
+                        .baseWidth[cardPosition]!
+                )
+                .position(
+                    onExpand ? circlesPositions[1]
+                        .expandedPositions[cardPosition]! : circlesPositions[1]
+                        .basePositions[cardPosition]!
+                )
+            Circle()
+                .stroke(Color.white, lineWidth: 4)
+                .frame(
+                    width: onExpand ? circlesPositions[2]
+                        .expandedWidth[cardPosition]! : circlesPositions[2]
+                        .baseWidth[cardPosition]!,
+                    height: onExpand ? circlesPositions[2]
+                        .expandedWidth[cardPosition]! : circlesPositions[2]
+                        .baseWidth[cardPosition]!
+                )
+                .position(
+                    onExpand ? circlesPositions[2]
+                        .expandedPositions[cardPosition]! : circlesPositions[2]
+                        .basePositions[cardPosition]!
+                )
             VStack(alignment: .leading, spacing: 0) {
                 HStack(spacing: 0) {
                     Circle()
@@ -41,17 +178,35 @@ struct CartaComponentVV: View {
                 )
                 HStack() {
                     VStack(alignment: .leading, spacing: 20){
-                        Text(titulo)
-                            .font(customFont("Poppins", size: 26, weight: .bold))
-                            .foregroundStyle(colorText)
-                        if(onExpand){
-                            Text(descripcion)
+                        VStack(alignment: cardAlignment(cardPosition)){
+                            Text(titulo)
                                 .font(
-                                    customFont("Poppins", size: 12, weight: .medium)
+                                    customFont(
+                                        "Poppins",
+                                        size: 26,
+                                        weight: .bold
+                                    )
                                 )
-                                .foregroundStyle(Color.white)
-                                .fixedSize(horizontal: false, vertical: true)
-                                
+                                .foregroundStyle(colorText)
+                            
+                            if(onExpand){
+                                Text(descripcion)
+                                    .font(
+                                        customFont(
+                                            "Poppins",
+                                            size: 12,
+                                            weight: .medium
+                                        )
+                                    )
+                                    .foregroundStyle(Color.white)
+                                    .fixedSize(
+                                        horizontal: false,
+                                        vertical: true
+                                    )
+                                    .multilineTextAlignment(
+                                        cardAlignmentText(cardPosition)
+                                    )
+                            }
                         }
                         //boton que diga ver y que este outlined
                         if(onExpand){
@@ -132,7 +287,7 @@ struct CartaComponentVV: View {
                 )
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-             // Mueve hacia arriba o abajo con la animación
+            // Mueve hacia arriba o abajo con la animación
         }
         .background(Color(themeColor.normal))
         .clipShape(
