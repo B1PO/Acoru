@@ -22,5 +22,3 @@ struct ContentView: View {
 }
 
 
-// Previsualización del ContentView
-

@@ -46,6 +46,7 @@ struct CartaComponentVV: View {
     @State var onExpand: Bool = false
     @State var colorText = Color.black
     @State var cardPosition: CartaCirclesPosition
+    var onActionTriggered: () -> Void // Closure para manejar el evento
     
     @State var circlesPositions: [CartaCircles] = [
         CartaCircles(
@@ -211,7 +212,9 @@ struct CartaComponentVV: View {
                         //boton que diga ver y que este outlined
                         if(onExpand){
                             VStack(){
-                                Button(action: {}) {
+                                Button(action: {
+                                    onActionTriggered()
+                                }) {
                                     HStack(spacing: 5) {
                                         Text("Iniciar")
                                             .font(
