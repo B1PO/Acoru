@@ -154,7 +154,8 @@ struct ViviendasViewVV: View {
                                         )
                                         .foregroundColor(.black)
                                     ProgresoComponent(
-                                        themeColor: $currentThemeColor
+                                        themeColor: $currentThemeColor,
+                                        progress: 0.5
                                     )
                                 }
                                 .frame(
@@ -209,7 +210,7 @@ struct ViviendasViewVV: View {
             .ignoresSafeArea()
             .navigationDestination(for: String.self){ destination in
                 if(destination == "InstaladorView"){
-                    InstaladorView(path: $path)
+                    InstaladorView(path: $path, themeColor: $currentThemeColor)
                 }
             }
         }

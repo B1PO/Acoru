@@ -10,6 +10,7 @@ import SwiftUI
 struct ProgresoComponent : View {
     @Binding var themeColor: ColorVariant
     @State var progress: Double = 0.0
+    @State var maxWidth: CGFloat = 300
     
     var body: some View {
         HStack{
@@ -50,7 +51,7 @@ struct ProgresoComponent : View {
                 }
                 .frame(maxWidth: .infinity, alignment: .trailing)
             }
-            .frame(maxWidth: 300)
+            .frame(maxWidth: maxWidth)
             Button(action: {}){
                 ZStack{
                     Circle()
