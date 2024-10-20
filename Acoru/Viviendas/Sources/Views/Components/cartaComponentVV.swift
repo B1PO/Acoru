@@ -200,10 +200,6 @@ struct CartaComponentVV: View {
                                         )
                                     )
                                     .foregroundStyle(Color.white)
-                                    .fixedSize(
-                                        horizontal: false,
-                                        vertical: true
-                                    )
                                     .multilineTextAlignment(
                                         cardAlignmentText(cardPosition)
                                     )

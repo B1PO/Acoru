@@ -12,9 +12,15 @@ struct ProgresoComponent : View {
     @State var progress: Double = 0.0
     @State var maxWidth: CGFloat = 300
     
+    var onActionTriggered: () -> Void // Closure para manejar el evento
+    var onActionLeftTriggered: () -> Void
+    var onActionRightTriggered: () -> Void
+    
     var body: some View {
         HStack{
-            Button(action: {}){
+            Button(action: {
+                onActionLeftTriggered()
+            }){
                 ZStack{
                     Circle()
                         .fill(Color.gray)
@@ -43,7 +49,10 @@ struct ProgresoComponent : View {
                         value: progress
                     )  // Anima el cambio del progreso
                 VStack(){
-                    Button(action: {}){
+                    Button(action: {
+                        onActionTriggered()
+                        
+                    }){
                         Circle()
                             .fill(Color.gray)
                             .frame(width: 50, height: 50)
@@ -52,7 +61,9 @@ struct ProgresoComponent : View {
                 .frame(maxWidth: .infinity, alignment: .trailing)
             }
             .frame(maxWidth: maxWidth)
-            Button(action: {}){
+            Button(action: {
+                onActionRightTriggered()
+            }){
                 ZStack{
                     Circle()
                         .fill(Color.gray)

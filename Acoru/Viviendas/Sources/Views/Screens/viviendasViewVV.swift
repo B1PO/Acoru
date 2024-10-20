@@ -155,7 +155,16 @@ struct ViviendasViewVV: View {
                                         .foregroundColor(.black)
                                     ProgresoComponent(
                                         themeColor: $currentThemeColor,
-                                        progress: 0.5
+                                        progress: 0.5,
+                                        onActionTriggered: {
+                                            
+                                        },
+                                        onActionLeftTriggered: {
+                                            
+                                        },
+                                        onActionRightTriggered: {
+                                            
+                                        }
                                     )
                                 }
                                 .frame(
@@ -198,14 +207,15 @@ struct ViviendasViewVV: View {
                                 )
                                 
                             }
+                            
                         }
                         .padding(.horizontal, 60)
                         .padding(.vertical, 50)
-                        
                     }
                 }
                 //padding left y right
                 .padding(.top, 10)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
             .ignoresSafeArea()
             .navigationDestination(for: String.self){ destination in
@@ -213,6 +223,7 @@ struct ViviendasViewVV: View {
                     InstaladorView(path: $path, themeColor: $currentThemeColor)
                 }
             }
+            
         }
     }
 }
