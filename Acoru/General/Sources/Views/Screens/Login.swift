@@ -50,7 +50,7 @@ struct LoginView: View {
                                // Botón de Google
                                Button(action: {
                                    // Acción de autenticación
-                                   print("Botón de Google presionado")
+                                   authViewModel.signIn()
                                }) {
                                    HStack {
                                        Image("LoGoogle") // Icono de Google (debe estar en tus assets)
@@ -76,8 +76,4 @@ struct LoginView: View {
     }
 
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        LoginView()
-    }
-}
+
