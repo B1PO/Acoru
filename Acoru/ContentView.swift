@@ -12,12 +12,9 @@ struct ContentView: View {
 
     var body: some View {
         Group {
-           
-            if authViewModel.isAuthenticated {
-                ViviendasViewVV()
-            } else {
-                LoginView()
-            }
+            
+            MainView()
+            
         }
         .onAppear {
             authViewModel.signOut()
