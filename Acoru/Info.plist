@@ -15,6 +15,7 @@
 	</array>
 	<key>UIAppFonts</key>
 	<array>
+		<string>ZenDots-Regular.ttf</string>
 		<string>Poppins-Bold.ttf</string>
 		<string>Poppins-Medium.ttf</string>
 		<string>Poppins-Regular.ttf</string>
