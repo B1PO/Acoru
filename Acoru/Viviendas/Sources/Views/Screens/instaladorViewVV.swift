@@ -6,28 +6,21 @@
 //
 import SwiftUI
 
-struct InstalacionesPasos {
-    let id: Int
-    let nombre: String
-    let descripcion: String
-    let imagen: String
-    let completado: Bool
-}
 
-struct Instalaciones{
-    let id: Int
-    let nombre: String
-    let descripcion: String
-    let imagen: Color
-    let pasos: [InstalacionesPasos] = []
-}
 
 
 struct InstaladorView: View{
     @Binding var path: NavigationPath // Pila de navegación
     @Binding var themeColor: ColorVariant
     @State private var openInstalaciones: Bool = false
-    @State private var openTutorial: Bool = false
+    @State private var opentutorial: Bool = false
+    @State var instalacionIndex = 0
+    @State private var scrollProxy: ScrollViewProxy? = nil
+    
+    @State private var scrollOffset: CGFloat = 0 // Almacena la posición
+    
+    @State private var activeItem: String? = nil // Almacena el objeto que llega a la mitad
+    @State private var isScrollingManually = false
     
     @State var instalaciones: [Instalaciones] = [
         Instalaciones(
@@ -58,13 +51,14 @@ struct InstaladorView: View{
     ]
     
     
-    @State var instalacionIndex = 0
+    
     
     private func findInstalacionInProgress(id: Int) -> Bool {
         instalacionesEnCurso.first(where: { $0.id == id }) != nil
     }
     
     private func nextLeft() {
+        isScrollingManually = true // Activar bandera de desplazamiento manual
         if(instalacionIndex > 0){
             instalacionIndex -= 1
         }else{
@@ -72,20 +66,42 @@ struct InstaladorView: View{
         }
         
         scrollProxy?.scrollTo(instalacionIndex, anchor: .top)
-        
+        DispatchQueue.main
+            .asyncAfter(deadline: .now() + 0.5) { // Restablecer la bandera
+                isScrollingManually = false
+            }
     }
     
     private func nextRight() {
+        isScrollingManually = true // Activar bandera de desplazamiento manual
         if(instalacionIndex < instalacionesAux.count - 1){
             instalacionIndex += 1
         }else{
             instalacionIndex = 0
         }
         scrollProxy?.scrollTo(instalacionIndex, anchor: .top)
+        DispatchQueue.main
+            .asyncAfter(deadline: .now() + 0.5) { // Restablecer la bandera
+                isScrollingManually = false
+            }
     }
     
-    @State private var scrollProxy: ScrollViewProxy? = nil
-    
+    // Función para detectar la dirección del desplazamiento y el objeto activo
+    func detectScrollDirection(newOffset: CGFloat, index: Int) {
+        let screenMidX = UIScreen.main.bounds.width / 2
+
+        // Detectar si el objeto está cerca de la mitad de la pantalla
+        // Detectar si el objeto está cerca de la mitad de la pantalla
+        if !isScrollingManually && abs(
+            newOffset - screenMidX
+        ) < 300 { // Solo ejecutar si no está desplazándose manualmente
+            print("Se ejecuta detectScrollDirection")
+            withAnimation(.easeInOut){
+                instalacionIndex = index
+            }
+        }
+
+    }
     
     var body: some View {
         ZStack {
@@ -118,7 +134,10 @@ struct InstaladorView: View{
                 VStack{
                     ZStack{
                         Text(
-                            instalacionesAux.isEmpty ? "Instalaciones" : instalacionesAux[instalacionIndex].nombre
+                            instalacionesAux.isEmpty ? "Instalaciones" :  (
+                                instalacionesAux.indices
+                                    .contains(instalacionIndex) ? instalacionesAux[instalacionIndex].nombre : instalacionesAux.first?.nombre ?? "Cargando..."
+                            )
                         )
                         .font(
                             customFont(
@@ -197,6 +216,7 @@ struct InstaladorView: View{
                                     .horizontal,
                                     showsIndicators: false
                                 ) {
+                                    
                                     HStack(spacing: 0) {
                                         ForEach(
                                             0..<instalacionesAux.count,
@@ -209,7 +229,7 @@ struct InstaladorView: View{
                                                 .padding(.vertical, 10)
                                                 .shadow(radius: 5, x: 5, y: 5)
                                                 .frame(
-                                                    width: UIScreen.main.bounds.width
+                                                    width: openInstalaciones ? UIScreen.main.bounds.width - 390 :UIScreen.main.bounds.width
                                                 )
                                                 .scrollTransition {
                                                     content,
@@ -222,9 +242,30 @@ struct InstaladorView: View{
                                                             phase.isIdentity ? 1 : 0.4
                                                         ) // Animación de escala
                                                 }
+                                                .background(
+                                                    GeometryReader { geo in
+                                                        Color.clear
+                                                            .preference(
+                                                                key: ItemOffsetPreferenceKey.self,
+                                                                value: geo
+                                                                    .frame(
+                                                                        in: .global
+                                                                    ).midX
+                                                            )
+                                                    }
+                                                )
+                                                .onPreferenceChange(
+                                                    ItemOffsetPreferenceKey.self
+                                                ) { value in
+                                                    detectScrollDirection(
+                                                        newOffset: value,
+                                                        index: index
+                                                    ) // Detectamos el desplazamiento y la posición
+                                                }
                                         }
                                     }
                                     .scrollTargetLayout() // Alinear el contenido con la vista
+                                    
 
                                 }
                                 .scrollTargetBehavior(.viewAligned)
@@ -232,13 +273,18 @@ struct InstaladorView: View{
                                 .onAppear {
                                     scrollProxy = proxy // Guardamos la referencia del proxy cuando aparezca
                                 }
+                                //saber cuando se gira ala izquierda o derecha con los gestos
+                                
                             }
+                            
                             HStack(spacing: 400){
                                 if(instalacionesEnCurso.isEmpty){
                                     HStack{
                                         Button(
                                             action: {
-                                                withAnimation(.easeInOut){
+                                                withAnimation(
+                                                    .easeInOut
+                                                ){
                                                     nextLeft()
                                                 }
                                             }) {
@@ -267,7 +313,9 @@ struct InstaladorView: View{
                                     HStack{
                                         Button(
                                             action: {
-                                                withAnimation(.easeInOut){
+                                                withAnimation(
+                                                    .easeInOut
+                                                ){
                                                     nextRight()
                                                 }
                                             }) {
@@ -311,40 +359,63 @@ struct InstaladorView: View{
                         }
                     }
                     VStack(spacing: 10){
-                        Button(
-                            action: {
-                            }) {
-                                Text(
-                                    instalacionesEnCurso.isEmpty ?"Empezar instalacion" : "Continuar instalando?"
-                                )
-                                .font(
-                                    customFont(
-                                        "Poppins",
-                                        size: 20,
-                                        weight: .bold
+                        if (!opentutorial) {
+                            Button(
+                                action: {
+                                    withAnimation(.bouncy(extraBounce: 0.3)){
+                                        if(instalacionesEnCurso.isEmpty){
+                                            // Primero añade el objeto a la lista
+                                            instalacionesEnCurso
+                                                .append(
+                                                    instalaciones[instalacionIndex]
+                                                )
+                                                        
+                                            // Luego, actualiza la lista auxiliar
+                                            instalacionesAux = instalacionesEnCurso
+
+                                            // Finalmente, restablece el índice y cualquier otra variable
+                                            instalacionIndex = 0
+                                            opentutorial.toggle()
+                                        }
+                                        
+                                    }
+                                   
+                                }) {
+                                    Text(
+                                        instalacionesEnCurso.isEmpty ?"Empezar instalacion" : "Continuar instalando?"
                                     )
-                                )
-                                .foregroundColor(.black)
-                                .padding(.vertical, 15)
-                                .padding(.horizontal, 20)
-                                .background(Color(themeColor.normal))
-                                .clipShape(
-                                    RoundedRectangle(cornerRadius: 15)
-                                )
-                            }
-                        if !openTutorial {
-                            Text(
-                                instalacionesAux.isEmpty ? "Cargando.." : instalacionesAux[instalacionIndex].descripcion
-                            )
-                            .font(
-                                customFont(
-                                    "Poppins",
-                                    size: 20,
-                                    weight: .medium
-                                )
-                            )
-                            .foregroundColor(.black)
+                                    .font(
+                                        customFont(
+                                            "Poppins",
+                                            size: 20,
+                                            weight: .bold
+                                        )
+                                    )
+                                    .foregroundColor(.black)
+                                    .padding(.vertical, 15)
+                                    .padding(.horizontal, 20)
+                                    .background(Color(themeColor.normal))
+                                    .clipShape(
+                                        RoundedRectangle(cornerRadius: 15)
+                                    )
+                                }
                         }
+                        
+                        Text(
+                            instalacionesAux.isEmpty ? "Cargando.." :   (
+                                instalacionesAux.indices
+                                    .contains(instalacionIndex) ? instalacionesAux[instalacionIndex].descripcion: instalacionesAux.first?.descripcion ?? "Cargando..."
+                            )
+                        )
+                        .font(
+                            customFont(
+                                "Poppins",
+                                size: 20,
+                                weight: .regular
+                            )
+                        )
+                        .foregroundColor(.black)
+                        
                     }
                     .padding(.top, 20)
                 }
@@ -404,16 +475,12 @@ struct InstaladorView: View{
                                                 .append(instalacion)
                                         }
                                         
-                                        let index = instalacionesAux.firstIndex(
-                                            where: { $0.id == instalacion.id
-                                            })!
+                                        instalacionesAux.removeAll()
+                                        instalacionesAux.append(instalacion)
+                                        instalacionIndex = 0
                                         
-                                        instalacionIndex = index
-                                    
                                         withAnimation(.easeOut){
-                                            //quitar una por una instalacioncard
                                             openInstalaciones.toggle()
-                                      
                                         }
                                     })
                                 .padding(.bottom, 10)
@@ -433,8 +500,6 @@ struct InstaladorView: View{
         .ignoresSafeArea()
         .navigationBarBackButtonHidden(true)
         .onAppear{
-            
-            
             if(instalacionesEnCurso.isEmpty){
                 instalacionesAux = instalaciones
             }else{
@@ -443,8 +508,18 @@ struct InstaladorView: View{
         }
     }
     
+
     
-    
+}
+
+
+struct ItemOffsetPreferenceKey: PreferenceKey {
+    typealias Value = CGFloat
+    static var defaultValue: CGFloat = 0
+
+    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+        value = nextValue()
+    }
 }
 
 struct Instalador_Previews: PreviewProvider {
