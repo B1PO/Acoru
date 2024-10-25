@@ -1,3 +1,5 @@
+import Foundation
+import FirebaseFirestore
 //
 //  UsuariosModelG.swift
 //  Acoru
@@ -5,17 +7,14 @@
 //  Created by Jose Alejandro Perez Chavez on 20/10/24.
 //
 
-struct Usuario {
-    let id: String // ID generado por Firebase Authentication
-    let correo: String // Obtenido de Firebase Auth
-    let nombre: String // Obtenido de Firebase Auth
-    let apellidos: String // Obtenido de Firebase Auth
-    let ubicacion: Coordenadas // Coordenadas de la ubicación del usuario
-//    let temasInteres: [String] // Ej: ["Servicios básicos", "Agricultura"]
-//    let contadorVistas: [String: Int] // Módulo y cantidad de veces que lo ha visto
-//    let tipoZona: String // "Montañoso", "Árido", "Tropical"
-//    let tieneLuzElectrica: Bool // Dependiendo de la respuesta, se mostrarán recomendaciones
-//    let riesgos: [String: Bool] // Ej: ["Temblores": true, "Inundaciones": false]
-    let fotoPerfilURL: String // URL de la foto de perfil almacenada en Firebase Storage
-    let instalaciones: [Instalaciones]
+struct Usuario: Identifiable, Codable {
+    @DocumentID var id: String?           // ID del usuario en Firebase
+      var correo: String                    // Correo electrónico del usuario
+      var nombre: String?                 // Nombre completo del usuario
+      var ubicacion: GeoPoint?              // Ubicación del usuario (Firebase GeoPoint)
+      var temasInteres: [String] = []          // Lista de temas de interés del usuario
+      var contadorVisitas: [String: Int] = [:]   // Contador de visitas por módulo (ej: ["Viviendas": 5])
+      var luzElectrica: Bool = false              // Indica si el usuario tiene luz eléctrica
+      var zonaRiesgo: [String] = []           // Lista de desastres naturales comunes (ej: ["temblores"])
+      var fotoPerfil: String?                // Emoji del perfil del usuario (usando Swift Avatars)
 }

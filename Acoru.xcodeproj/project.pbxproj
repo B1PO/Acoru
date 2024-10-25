@@ -14,7 +14,14 @@
 		29AB18DD2CC43BA7002FDF4D /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 29AB18DC2CC43BA7002FDF4D /* FirebaseAuth */; };
 		29AB18DF2CC43BA7002FDF4D /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 29AB18DE2CC43BA7002FDF4D /* FirebaseCore */; };
 		29AB18E12CC43BA7002FDF4D /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 29AB18E02CC43BA7002FDF4D /* FirebaseDatabase */; };
-		29AB18E52CC440BD002FDF4D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 29AB18E42CC440BD002FDF4D /* GoogleService-Info.plist */; };
+		29DBCDE82CCB4A6800D69E68 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 29DBCDE72CCB4A6800D69E68 /* GoogleService-Info.plist */; };
+		29DBCDEA2CCBD9C700D69E68 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 29DBCDE92CCBD9C700D69E68 /* FirebaseAnalytics */; };
+		29DBCDEC2CCBD9C700D69E68 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 29DBCDEB2CCBD9C700D69E68 /* FirebaseAuth */; };
+		29DBCDEE2CCBD9C700D69E68 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 29DBCDED2CCBD9C700D69E68 /* FirebaseCore */; };
+		29DBCDF02CCBD9C700D69E68 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 29DBCDEF2CCBD9C700D69E68 /* FirebaseDatabase */; };
+		29DBCDF22CCBD9C700D69E68 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 29DBCDF12CCBD9C700D69E68 /* FirebaseFirestore */; };
+		29DBCDF42CCBD9C700D69E68 /* FirebaseFunctions in Frameworks */ = {isa = PBXBuildFile; productRef = 29DBCDF32CCBD9C700D69E68 /* FirebaseFunctions */; };
+		29DBCDF62CCBD9C700D69E68 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 29DBCDF52CCBD9C700D69E68 /* FirebaseStorage */; };
 		6C1838722C9B571E005D1F9D /* AcoruApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C1838712C9B571E005D1F9D /* AcoruApp.swift */; };
 		6C1838742C9B571E005D1F9D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C1838732C9B571E005D1F9D /* ContentView.swift */; };
 		6C1838792C9B571F005D1F9D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6C1838782C9B571F005D1F9D /* Preview Assets.xcassets */; };
@@ -23,7 +30,7 @@
 /* Begin PBXFileReference section */
 		2909F6EF2CC388D700329123 /* Acoru.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Acoru.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		296889D32CC1BA3300CBFC02 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		29AB18E42CC440BD002FDF4D /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		29DBCDE72CCB4A6800D69E68 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		6C1838712C9B571E005D1F9D /* AcoruApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcoruApp.swift; sourceTree = "<group>"; };
 		6C1838732C9B571E005D1F9D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		6C1838782C9B571F005D1F9D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -45,9 +52,16 @@
 			files = (
 				29AB18D32CC43700002FDF4D /* GoogleSignInSwift in Frameworks */,
 				29AB18DD2CC43BA7002FDF4D /* FirebaseAuth in Frameworks */,
+				29DBCDEA2CCBD9C700D69E68 /* FirebaseAnalytics in Frameworks */,
 				29AB17EE2CC424CA002FDF4D /* FirebaseAnalytics in Frameworks */,
+				29DBCDEC2CCBD9C700D69E68 /* FirebaseAuth in Frameworks */,
+				29DBCDF22CCBD9C700D69E68 /* FirebaseFirestore in Frameworks */,
 				29AB18DB2CC43BA7002FDF4D /* FirebaseAnalytics in Frameworks */,
+				29DBCDEE2CCBD9C700D69E68 /* FirebaseCore in Frameworks */,
 				29AB18DF2CC43BA7002FDF4D /* FirebaseCore in Frameworks */,
+				29DBCDF42CCBD9C700D69E68 /* FirebaseFunctions in Frameworks */,
+				29DBCDF02CCBD9C700D69E68 /* FirebaseDatabase in Frameworks */,
+				29DBCDF62CCBD9C700D69E68 /* FirebaseStorage in Frameworks */,
 				29AB18E12CC43BA7002FDF4D /* FirebaseDatabase in Frameworks */,
 				29AB18D12CC43700002FDF4D /* GoogleSignIn in Frameworks */,
 			);
@@ -77,7 +91,7 @@
 				6C1838772C9B571F005D1F9D /* Preview Content */,
 				4DA497A42CBDAD52009F1264 /* Resources */,
 				4DA497AA2CBDAD66009F1264 /* ChatBox */,
-				29AB18E42CC440BD002FDF4D /* GoogleService-Info.plist */,
+				29DBCDE72CCB4A6800D69E68 /* GoogleService-Info.plist */,
 			);
 			path = Acoru;
 			sourceTree = "<group>";
@@ -161,7 +175,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6C1838792C9B571F005D1F9D /* Preview Assets.xcassets in Resources */,
-				29AB18E52CC440BD002FDF4D /* GoogleService-Info.plist in Resources */,
+				29DBCDE82CCB4A6800D69E68 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -442,6 +456,41 @@
 		29AB18E02CC43BA7002FDF4D /* FirebaseDatabase */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = FirebaseDatabase;
+		};
+		29DBCDE92CCBD9C700D69E68 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 29AB17EC2CC424CA002FDF4D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		29DBCDEB2CCBD9C700D69E68 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 29AB17EC2CC424CA002FDF4D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		29DBCDED2CCBD9C700D69E68 /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 29AB17EC2CC424CA002FDF4D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		29DBCDEF2CCBD9C700D69E68 /* FirebaseDatabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 29AB17EC2CC424CA002FDF4D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseDatabase;
+		};
+		29DBCDF12CCBD9C700D69E68 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 29AB17EC2CC424CA002FDF4D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		29DBCDF32CCBD9C700D69E68 /* FirebaseFunctions */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 29AB17EC2CC424CA002FDF4D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFunctions;
+		};
+		29DBCDF52CCBD9C700D69E68 /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 29AB17EC2CC424CA002FDF4D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

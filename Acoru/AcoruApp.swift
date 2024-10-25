@@ -35,11 +35,11 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 @main
 struct AcoruApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
-    @StateObject private var authViewModel = GoogleSignInViewModel()
+    @StateObject private var authService = AuthService() // Cambiamos a AuthService
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environmentObject(authViewModel)
+                .environmentObject(authService)
         }
     }
 }
