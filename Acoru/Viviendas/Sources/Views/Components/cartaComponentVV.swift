@@ -295,6 +295,7 @@ struct CartaComponentVV: View {
                 style: .continuous
             )
         )
+        .frame(maxHeight: 350)
         .onTapGesture {
             //animacion para abajo
             withAnimation(.easeInOut) {
