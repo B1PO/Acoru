@@ -77,3 +77,8 @@ struct LoginView: View {
 
 
 
+struct MiVista_Previews: PreviewProvider {
+    static var previews: some View {
+        LoginView()
+    }
+}
