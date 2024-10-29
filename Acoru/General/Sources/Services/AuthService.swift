@@ -4,6 +4,13 @@ import FirebaseAuth
 class AuthService: ObservableObject {
     @Published var isAuthenticated: Bool = false
 
+    init() {
+        // Comprueba si hay un usuario autenticado al iniciar la aplicación
+        if Auth.auth().currentUser != nil {
+            self.isAuthenticated = true
+        }
+    }
+
     func signIn(with provider: AuthProvider) {
         switch provider {
         case .google:

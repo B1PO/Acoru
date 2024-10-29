@@ -36,21 +36,30 @@ struct ViviendasViewVV: View {
     @State private var isExpanded: Bool = false
     @State private var hStackOffset: CGFloat = 0
     @State private var opacity: Double = 1
- 
+
+    //state de notificacion
+    @State private var isNotification: Bool = false
+
+    var UISW: CGFloat = UIScreen.main.bounds.width
+    var UISH: CGFloat = UIScreen.main.bounds.height
 
     var onClose: () -> Void  // Función de cierre para regresar a la vista principal
 
-    func viewManager(for service: Service, option: ServiceOptions) -> AnyView
-    {
+    @State private var titlePantalla: String = "Evaluador"
+    @State private var descripcionPantalla: String =
+        "Descubre cómo construir tu hogar ideal con nuestras herramientas"
+
+    func viewManager(for service: Service, option: ServiceOptions) -> AnyView {
         switch option {
         case .evaluador:
             return AnyView(EvaluadorViewVV())
         case .simulador:
-            return AnyView( EmptyView())
+
+            return AnyView(EmptyView())
         case .instalacion:
-            return AnyView( EmptyView())
+            return AnyView(EmptyView())
         case .none:
-            return AnyView( EmptyView())
+            return AnyView(EmptyView())
         }
     }
 
@@ -74,20 +83,20 @@ struct ViviendasViewVV: View {
                     )
                 )
                 .foregroundColor(.clear)
-
             VStack(alignment: .leading, spacing: 40) {
                 // Flecha de regreso
                 if !isExpanded {
                     HStack {
-                        Button(action: {
-                            onClose()  // Acción para regresar a la pantalla principal
-                        }) {
-                            Image(systemName: "chevron.left")
-                                .font(.title)
-                                .foregroundColor(.white)
-                                .padding(.horizontal)
-                                .padding(.top, 20)
-                        }
+                        Button(
+                            action: {
+                                onClose()  // Acción para regresar a la pantalla principal
+                            }) {
+                                Image(systemName: "chevron.left")
+                                    .font(.title)
+                                    .foregroundColor(.white)
+                                    .padding(.horizontal)
+                                    .padding(.top, 20)
+                            }
                     }
                     .padding(.horizontal, 20)
 
@@ -130,6 +139,7 @@ struct ViviendasViewVV: View {
                                     // Restablece `isExpanded` con animación inversa
                                     withAnimation(.easeInOut(duration: 0.5)) {
                                         isExpanded = false
+
                                     }
 
                                     DispatchQueue.main.asyncAfter(
@@ -139,6 +149,7 @@ struct ViviendasViewVV: View {
                                             .bouncy
                                         ) {
                                             hStackOffset = .zero
+                                            isNotification = false
                                         }
                                     }
                                 }) {
@@ -201,7 +212,7 @@ struct ViviendasViewVV: View {
                                     }
                                     if isExpanded {
                                         VStack(alignment: .leading) {
-                                            Text("Evaluador")
+                                            Text(titlePantalla)
                                                 .font(
                                                     customFont(
                                                         "Poppins", size: 34,
@@ -209,7 +220,7 @@ struct ViviendasViewVV: View {
                                                 )
                                                 .foregroundColor(.black)
                                             Text(
-                                                "Descubre cómo construir tu hogar ideal con nuestras herramientas"
+                                                descripcionPantalla
                                             )
                                             .font(
                                                 customFont(
@@ -278,12 +289,19 @@ struct ViviendasViewVV: View {
                                                 isExpanded = true
                                             }
                                         }
-                                        
+
                                         DispatchQueue.main.asyncAfter(
                                             deadline: .now() + 0.4
                                         ) {
                                             //
                                             viewSelected = .evaluador
+                                        }
+
+                                        DispatchQueue.main.asyncAfter(
+                                            deadline: .now() + 0.5
+                                        ) {
+                                            //
+                                            isNotification = true
                                         }
 
                                     }
@@ -296,17 +314,10 @@ struct ViviendasViewVV: View {
                                     themeColor: $currentThemeColor,
                                     cardPosition: .center,
                                     onActionTriggered: {
-                                        //                                        path.append("SimuladorView")
-                                    }
-                                )
-
-                                CartaComponentVV(
-                                    titulo: "Instalación",
-                                    descripcion:
-                                        "Revisa la compatibilidad de tu casa con la ecotecnología.",
-                                    themeColor: $currentThemeColor,
-                                    cardPosition: .left,
-                                    onActionTriggered: {
+                                        //
+                                        titlePantalla = "Simulador"
+                                        descripcionPantalla =
+                                            "Adentrate en la realidad aumentada ACORU  y conoce soluciones sostenibles."
                                         withAnimation(.easeInOut(duration: 0.9))
                                         {
                                             hStackOffset = -UIScreen.main.bounds
@@ -315,7 +326,7 @@ struct ViviendasViewVV: View {
 
                                         // Desplazar el HStack hacia la izquierda con un retardo
                                         DispatchQueue.main.asyncAfter(
-                                            deadline: .now() + 0.1
+                                            deadline: .now() + 0.2
                                         ) {
                                             withAnimation(
                                                 .bouncy
@@ -327,8 +338,52 @@ struct ViviendasViewVV: View {
                                         DispatchQueue.main.asyncAfter(
                                             deadline: .now() + 0.4
                                         ) {
-                                            //                                            path.append("InstaladorView")
+                                            //
+                                            viewSelected = .simulador
                                         }
+
+                                        DispatchQueue.main.asyncAfter(
+                                            deadline: .now() + 0.5
+                                        ) {
+                                            //
+                                            isNotification = true
+                                        }
+                                    }
+                                )
+
+                                CartaComponentVV(
+                                    titulo: "Instalación",
+                                    descripcion:
+                                        "Revisa la compatibilidad de tu casa con la ecotecnología.",
+                                    themeColor: $currentThemeColor,
+                                    cardPosition: .left,
+                                    onActionTriggered: {
+
+                                        withAnimation(.easeInOut(duration: 0.9))
+                                        {
+                                            hStackOffset = -UIScreen.main.bounds
+                                                .width
+                                            isNotification = true
+                                        }
+
+                                        // Desplazar el HStack hacia la izquierda con un retardo
+                                        DispatchQueue.main.asyncAfter(
+                                            deadline: .now() + 0.2
+                                        ) {
+                                            withAnimation(
+                                                .bouncy
+                                            ) {
+                                                isExpanded = true
+                                            }
+                                        }
+
+                                        DispatchQueue.main.asyncAfter(
+                                            deadline: .now() + 0.4
+                                        ) {
+                                            //
+                                            viewSelected = .instalacion
+                                        }
+
                                     }
                                 )
                             }
@@ -337,7 +392,7 @@ struct ViviendasViewVV: View {
                                     insertion: .move(edge: .bottom),
                                     removal: .opacity.combined(
                                         with: .move(edge: .leading))))
-                        }else{
+                        } else {
                             viewManager(
                                 for: selectedService,
                                 option: viewSelected
@@ -351,6 +406,13 @@ struct ViviendasViewVV: View {
             }
             .padding(.top, isExpanded ? 0 : 10)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
+            NotificationWidget(
+                descriptionText:
+                    "Para empezar, sube una foto de la instalación o toma una foto del área que deseas evaluar",
+                isVisible: $isNotification
+                
+            )
+            .position(x: UISW * 0.75, y: UISH * 0.17)
 
         }
         .ignoresSafeArea()
