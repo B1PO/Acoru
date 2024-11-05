@@ -7,7 +7,7 @@ class AuthService: ObservableObject {
     init() {
         // Comprueba si hay un usuario autenticado al iniciar la aplicación
         if Auth.auth().currentUser != nil {
-            self.isAuthenticated = true
+            self.isAuthenticated = false
         }
     }
 

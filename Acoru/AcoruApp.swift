@@ -40,6 +40,8 @@ struct AcoruApp: App {
         WindowGroup {
             ContentView()
                 .environmentObject(authService)
+//            CameraViewVV()
+//                .ignoresSafeArea()
         }
     }
 }
