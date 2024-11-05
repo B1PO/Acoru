@@ -95,6 +95,10 @@ struct ViviendasViewVV: View {
                     )
                   )
                   .frame(maxHeight: 300)
+                Image("fondo_viviendas")
+                    .resizable()
+                    .scaledToFit() // Mantiene la proporción de la imagen
+                    .frame(maxWidth: .infinity) // Ajusta el ancho al contenedor
                 VStack(alignment: .leading, spacing: 40) {
                     // Flecha de regreso
                     if !isExpanded {
