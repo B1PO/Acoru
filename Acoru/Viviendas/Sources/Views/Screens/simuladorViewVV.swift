@@ -3,7 +3,7 @@ import SwiftUI
 struct simuladorViewVV: View {
     @State private var isInsideSimuladorPresented = false // Variable de estado para controlar la presentación de la vista
     @Binding var currentTheme: ColorVariant
-    @Binding var isInsideSimuladorActive: Bool
+    @Binding var path: NavigationPath
 
     var body: some View {
         VStack(spacing: 0) {
@@ -24,7 +24,7 @@ struct simuladorViewVV: View {
             // Botón de comenzar
             Button(action: {
                 // Cambia el estado para presentar la vista de InsideSimuladorVV
-                isInsideSimuladorPresented = true
+                path.append("Simulador")
             }) {
                 HStack {
                     Text("Comenzar")
@@ -42,9 +42,6 @@ struct simuladorViewVV: View {
             }
             .padding(.top, 16)
             .padding(.leading, 850)
-            .fullScreenCover(isPresented: $isInsideSimuladorPresented) {
-                InsideSimuladorVV(isInsideSimuladorActive: $isInsideSimuladorActive) // Abre InsideSimuladorVV como pantalla completa
-            }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding()

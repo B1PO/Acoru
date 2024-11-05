@@ -72,8 +72,7 @@ struct ViviendasViewVV: View {
 
             return AnyView(
                 simuladorViewVV(
-                    currentTheme: $currentThemeColor,
-                    isInsideSimuladorActive: $isInsideSimuladorActive
+                    currentTheme: $currentThemeColor, path: $path
                 )
             )
 
@@ -533,6 +532,9 @@ struct ViviendasViewVV: View {
             .navigationDestination(for: String.self) { id in
                 if id == "Camara" {
                     CameraViewVV(path: $path, capturedPhotos: $capturedPhotos)
+                }
+                if id == "Simulador" {
+                    InsideSimuladorVV(path: $path)
                 }
             }
         }

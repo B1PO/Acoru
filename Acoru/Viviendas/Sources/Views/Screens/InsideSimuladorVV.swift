@@ -3,7 +3,7 @@ import ARKit
 import RealityKit
 
 struct InsideSimuladorVV: View {
-    @Binding var isInsideSimuladorActive: Bool
+    @Binding var path: NavigationPath
     var body: some View {
         ZStack {
             // Fondo: usa ARViewContainer para el dispositivo, o Color negro para el preview
@@ -14,7 +14,7 @@ struct InsideSimuladorVV: View {
                 // Encabezado en la esquina superior izquierda, pegado al borde izquierdo
                 Button(
                     action: {
-                        isInsideSimuladorActive = false
+                        path.removeLast()
                     }) {
                         Image(systemName: "chevron.left")
                             .font(.title)
