@@ -344,7 +344,7 @@ struct InstaladorView: View{
                         if !instalacionesEnCurso.isEmpty {
                             ProgresoComponent(
                                 themeColor: $themeColor,
-                                progress: 0.5,
+                                fixedProgress: 0.5,
                                 maxWidth: 500,
                                 onActionTriggered: {
                                     

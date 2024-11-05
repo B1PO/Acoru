@@ -35,6 +35,26 @@ func cardAlignmentText(_ position: CartaCirclesPosition) -> TextAlignment {
     }
 }
 
+extension String {
+    func sinAcentos() -> String {
+        return self.folding(options: .diacriticInsensitive, locale: .current)
+    }
+}
+
+func obtenerNombreImagen(titulo: String, themeColor: ColorVariant) -> String {
+    var tipo = ""
+    
+    if themeColor.normal == ColorPaletteVV.agua.normal {
+        tipo = "residuos"
+    } else if themeColor.normal == ColorPaletteVV.electricidad.normal {
+        tipo = "electricidad"
+    } else if themeColor.normal == ColorPaletteVV.residuos.normal {
+        tipo = "agua"
+    }
+    
+    //imprimir en consola el titulo sin acentos
+    return "\(titulo.lowercased().sinAcentos())_\(tipo)"
+}
 
 
 struct CartaComponentVV: View {
@@ -118,6 +138,11 @@ struct CartaComponentVV: View {
     ]
     
     
+
+   
+
+    
+    
     var body: some View {
         ZStack(alignment: .topLeading) {
             Circle()
@@ -167,10 +192,20 @@ struct CartaComponentVV: View {
                 )
             VStack(alignment: .leading, spacing: 0) {
                 HStack(spacing: 0) {
-                    Circle()
-                        .fill(Color.white)
-                        .frame(width: 80, height: 80)
-                        .padding(30)
+                    ZStack {
+                           Circle()
+                               .fill(Color.white)
+                               .frame(width: 80, height: 80)
+                               .padding(30)
+                           
+                        Image(obtenerNombreImagen(
+                            titulo: titulo,
+                            themeColor: themeColor
+                        ))
+                               .resizable()
+                               .scaledToFit()
+                               .frame(width: 50, height: 50) // Ajusta el tamaño de la imagen para que encaje en el círculo
+                       }
                 }
                 .frame(
                     maxWidth: .infinity,
