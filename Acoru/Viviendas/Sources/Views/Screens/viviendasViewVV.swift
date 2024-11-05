@@ -22,6 +22,7 @@ enum ServiceOptions {
 }
 
 struct ViviendasViewVV: View {
+    
     let icons = [
         Icon(id: 0, name: "Gota", themeColor: ColorPaletteVV.residuos),
         Icon(id: 1, name: "Trash", themeColor: ColorPaletteVV.agua),
@@ -32,8 +33,8 @@ struct ViviendasViewVV: View {
 
     @State private var currentThemeColor: ColorVariant = ColorPaletteVV.residuos
     @State private var selectedService: Service = .agua
-    @State private var viewSelected: ServiceOptions = .none
-    @State private var isExpanded: Bool = false
+    @State private var viewSelected: ServiceOptions = .simulador
+    @State private var isExpanded: Bool = true
     @State private var hStackOffset: CGFloat = 0
     @State private var opacity: Double = 1
 
@@ -55,7 +56,7 @@ struct ViviendasViewVV: View {
             return AnyView(EvaluadorViewVV())
         case .simulador:
 
-            return AnyView(EmptyView())
+            return AnyView(simuladorViewVV(currentTheme: $currentThemeColor))
         case .instalacion:
             return AnyView(EmptyView())
         case .none:
