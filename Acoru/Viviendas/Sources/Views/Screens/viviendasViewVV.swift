@@ -29,6 +29,13 @@ struct ViviendasViewVV: View {
             id: 2, name: "Electricidad", themeColor: ColorPaletteVV.electricidad
         ),
     ]
+    
+    var progresoModelsSample = [
+        ProgresoModel(img: UIImage(named:"captacion_agua")!, fixedProgress: 0.2),
+        ProgresoModel(img: UIImage(named: "filtros_agua")!, fixedProgress: 0.5),
+        ProgresoModel(img: UIImage(named:"riego_agua")!, fixedProgress: 0.8),
+        ProgresoModel(img: UIImage(named:"tanques_agua")!, fixedProgress: 0.3)
+    ]
 
     @State private var currentThemeColor: ColorVariant = ColorPaletteVV.residuos
     @State var capturedPhotos: [UIImage] = []
@@ -336,7 +343,7 @@ struct ViviendasViewVV: View {
 
                                         ProgresoComponent(
                                             themeColor: $currentThemeColor,
-                                            fixedProgress: 0.5,
+                                            progresoModels: progresoModelsSample,
                                             onActionTriggered: {},
                                             onActionLeftTriggered: {},
                                             onActionRightTriggered: {}
