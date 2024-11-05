@@ -3,6 +3,7 @@ import ARKit
 import RealityKit
 
 struct InsideSimuladorVV: View {
+    @Binding var isInsideSimuladorActive: Bool
     var body: some View {
         ZStack {
             // Fondo: usa ARViewContainer para el dispositivo, o Color negro para el preview
@@ -11,6 +12,17 @@ struct InsideSimuladorVV: View {
             // Superposición de elementos en la vista
             VStack {
                 // Encabezado en la esquina superior izquierda, pegado al borde izquierdo
+                Button(
+                    action: {
+                        isInsideSimuladorActive = false
+                    }) {
+                        Image(systemName: "chevron.left")
+                            .font(.title)
+                            .foregroundColor(.white)
+                            .padding(.horizontal)
+                            .padding(.top, 20)
+                    }
+                
                 HStack {
                     ZStack {
                         // Fondo blanco con esquinas superiores e inferiores derechas redondeadas
@@ -104,11 +116,7 @@ struct InsideSimuladorVV: View {
     }
 }
 
-struct InsideSimuladorVV_Previews: PreviewProvider {
-    static var previews: some View {
-        InsideSimuladorVV()
-    }
-}
+
 
 // ARViewContainer para usar la cámara real en el dispositivo
 struct ARViewContainer: UIViewRepresentable {

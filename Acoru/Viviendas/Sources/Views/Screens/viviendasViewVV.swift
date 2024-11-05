@@ -37,7 +37,8 @@ struct ViviendasViewVV: View {
     @State private var isExpanded: Bool = true
     @State private var hStackOffset: CGFloat = 0
     @State private var opacity: Double = 1
-
+    // Controla si InsideSimuladorVV está activo
+        @State private var isInsideSimuladorActive = false
     //state de notificacion
     @State private var isNotification: Bool = false
 
@@ -56,7 +57,13 @@ struct ViviendasViewVV: View {
             return AnyView(EvaluadorViewVV())
         case .simulador:
 
-            return AnyView(simuladorViewVV(currentTheme: $currentThemeColor))
+            return AnyView(
+                simuladorViewVV(
+                    currentTheme: $currentThemeColor,
+                    isInsideSimuladorActive: $isInsideSimuladorActive
+                )
+            )
+
         case .instalacion:
             return AnyView(EmptyView())
         case .none:
