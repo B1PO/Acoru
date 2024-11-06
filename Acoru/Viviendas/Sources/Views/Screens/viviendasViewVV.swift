@@ -82,6 +82,17 @@ struct ViviendasViewVV: View {
             return AnyView(EmptyView())
         }
     }
+    
+    func serviceToIconId(_ service: Service) -> Int {
+        switch service {
+        case .agua:
+            return 0
+        case .residuos:
+            return 1
+        case .electricidad:
+            return 2
+        }
+    }
 
     var body: some View {
         NavigationStack(path: $path) {
@@ -534,7 +545,11 @@ struct ViviendasViewVV: View {
                     CameraViewVV(path: $path, capturedPhotos: $capturedPhotos)
                 }
                 if id == "Simulador" {
-                    InsideSimuladorVV(path: $path)
+                    InsideSimuladorVV(
+                        path: $path,
+                        currentTheme: $currentThemeColor,
+                        iconName: .constant(icons.first { $0.id == serviceToIconId($selectedService.wrappedValue) }?.name ?? "Gota")
+                    )
                 }
             }
         }
