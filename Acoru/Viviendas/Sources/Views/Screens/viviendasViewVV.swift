@@ -22,6 +22,7 @@ enum ServiceOptions {
 }
 
 struct ViviendasViewVV: View {
+    
     let icons = [
         Icon(id: 0, name: "Gota", themeColor: ColorPaletteVV.residuos),
         Icon(id: 1, name: "Trash", themeColor: ColorPaletteVV.agua),
@@ -40,8 +41,8 @@ struct ViviendasViewVV: View {
     @State private var currentThemeColor: ColorVariant = ColorPaletteVV.residuos
     @State var capturedPhotos: [UIImage] = []
     @State private var selectedService: Service = .agua
-    @State private var viewSelected: ServiceOptions = .none
-    @State private var isExpanded: Bool = false
+    @State private var viewSelected: ServiceOptions = .simulador
+    @State private var isExpanded: Bool = true
     @State private var hStackOffset: CGFloat = 0
     @State private var opacity: Double = 1
     @State private var path: NavigationPath = NavigationPath()
@@ -69,11 +70,27 @@ struct ViviendasViewVV: View {
             )
         case .simulador:
 
-            return AnyView(EmptyView())
+            return AnyView(
+                simuladorViewVV(
+                    currentTheme: $currentThemeColor, path: $path
+                )
+            )
+
         case .instalacion:
             return AnyView(EmptyView())
         case .none:
             return AnyView(EmptyView())
+        }
+    }
+    
+    func serviceToIconId(_ service: Service) -> Int {
+        switch service {
+        case .agua:
+            return 0
+        case .residuos:
+            return 1
+        case .electricidad:
+            return 2
         }
     }
 
@@ -526,6 +543,13 @@ struct ViviendasViewVV: View {
             .navigationDestination(for: String.self) { id in
                 if id == "Camara" {
                     CameraViewVV(path: $path, capturedPhotos: $capturedPhotos)
+                }
+                if id == "Simulador" {
+                    InsideSimuladorVV(
+                        path: $path,
+                        currentTheme: $currentThemeColor,
+                        iconName: .constant(icons.first { $0.id == serviceToIconId($selectedService.wrappedValue) }?.name ?? "Gota")
+                    )
                 }
             }
         }
