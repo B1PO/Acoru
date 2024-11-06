@@ -1,7 +1,6 @@
 import SwiftUI
 
 struct simuladorViewVV: View {
-    @State private var isInsideSimuladorPresented = false // Variable de estado para controlar la presentación de la vista
     @Binding var currentTheme: ColorVariant
     @Binding var path: NavigationPath
 

@@ -75,7 +75,6 @@ struct CameraViewVV: View {
             }
 
         }
-
         .task {
             // Espera 0.3 segundos antes de mostrar la notificación
             try? await Task.sleep(nanoseconds: 300_000_000)  // 0.3 segundos en nanosegundos

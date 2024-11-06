@@ -137,12 +137,6 @@ struct CartaComponentVV: View {
         )
     ]
     
-    
-
-   
-
-    
-    
     var body: some View {
         ZStack(alignment: .topLeading) {
             Circle()
