@@ -20,8 +20,5 @@
 		<string>Poppins-Medium.ttf</string>
 		<string>Poppins-Regular.ttf</string>
 	</array>
-	<key>NSCameraUsageDescription</key>
-	<string>La aplicación necesita acceso a la cámara para capturar imágenes.</string>
-
 </dict>
 </plist>
