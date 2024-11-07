@@ -395,6 +395,8 @@ struct ViviendasViewVV: View {
                                         themeColor: $currentThemeColor,
                                         cardPosition: .right,
                                         onActionTriggered: {
+                                            titlePantalla = "Evaluador"
+                                            descripcionPantalla = "Revisa la capacidad de tu hogar para soluciones ecotecnológicas."
                                             Task {
                                                 // Desplaza el HStack hacia la izquierda
                                                 withAnimation(.easeInOut(duration: 0.9)) {
@@ -426,6 +428,8 @@ struct ViviendasViewVV: View {
                                         themeColor: $currentThemeColor,
                                         cardPosition: .center,
                                         onActionTriggered: {
+                                            titlePantalla = "Simulador"
+                                            descripcionPantalla = "Adentrate en la realidad aumentada ACORU  y conoce soluciones sostenibles."
                                             Task {
                                                 withAnimation(.easeInOut(duration: 0.9)) {
                                                     hStackOffset = -UIScreen.main.bounds.width
@@ -453,6 +457,8 @@ struct ViviendasViewVV: View {
                                         themeColor: $currentThemeColor,
                                         cardPosition: .left,
                                         onActionTriggered: {
+                                            titlePantalla = "Instalación"
+                                            descripcionPantalla = "Convierte en realidad las soluciones con las guias paso a paso"
                                             Task {
                                                 // Desplaza el HStack hacia la izquierda y muestra la notificación
                                                 withAnimation(.easeInOut(duration: 0.9)) {
