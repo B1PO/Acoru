@@ -59,7 +59,7 @@ struct LoginView: View {
                         .overlay(
                             RoundedRectangle(cornerRadius: 5)
                                 .stroke(Color(red: 46 / 255, green: 166 / 255, blue: 222 / 255), lineWidth: 1.5)
-                        )
+                        ).shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 6)
                 }.padding(.bottom, 30)
                
                 HStack {
@@ -101,7 +101,7 @@ struct LoginView: View {
                         .overlay(
                             RoundedRectangle(cornerRadius: 10)
                                 .stroke(Color.black, lineWidth: 1)
-                        )
+                        ).shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 6)
                     }
 
                     Button(action: {
@@ -117,7 +117,7 @@ struct LoginView: View {
                         .overlay(
                             RoundedRectangle(cornerRadius: 10)
                                 .stroke(Color.white, lineWidth: 1)
-                        )
+                        ).shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 6)
                     }
                 }
                 .padding(.top, 5).padding(.bottom, 50)
