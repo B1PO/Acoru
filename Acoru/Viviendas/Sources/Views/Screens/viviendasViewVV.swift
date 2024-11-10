@@ -22,9 +22,12 @@ enum ServiceOptions {
 }
 
 enum NotificationMessage: String {
-    case evaluador = "Para empezar, sube una foto de la instalación o toma una foto del área que deseas evaluar."
-    case simulador = "Escanea el área que deseas evaluar para visualizar las mejoras en realidad aumentada."
-    case instalacion = "Sube una imagen del área o instalación que quieres analizar para verificar su estado."
+    case evaluador =
+        "Para empezar, sube una foto de la instalación o toma una foto del área que deseas evaluar."
+    case simulador =
+        "Escanea el área que deseas evaluar para visualizar las mejoras en realidad aumentada."
+    case instalacion =
+        "Sube una imagen del área o instalación que quieres analizar para verificar su estado."
     case defaultMessage = "Selecciona una opción para comenzar la evaluación."
 
     static func message(for option: ServiceOptions) -> String {
@@ -41,10 +44,8 @@ enum NotificationMessage: String {
     }
 }
 
-
-
 struct ViviendasViewVV: View {
-    
+
     let icons = [
         Icon(id: 0, name: "Gota", themeColor: ColorPaletteVV.residuos),
         Icon(id: 1, name: "Trash", themeColor: ColorPaletteVV.agua),
@@ -52,12 +53,22 @@ struct ViviendasViewVV: View {
             id: 2, name: "Electricidad", themeColor: ColorPaletteVV.electricidad
         ),
     ]
-    
+
     var progresoModelsSample = [
-        ProgresoModel(img: UIImage(named:"captacion_agua")!, fixedProgress: 0.2),
-        ProgresoModel(img: UIImage(named: "filtros_agua")!, fixedProgress: 0.5),
-        ProgresoModel(img: UIImage(named:"riego_agua")!, fixedProgress: 0.8),
-        ProgresoModel(img: UIImage(named:"tanques_agua")!, fixedProgress: 0.3)
+        ProgresoModel(
+            img: UIImage(named: "captacion_agua")!, title: "Captación de agua",
+            fixedProgress: 0.2),
+        ProgresoModel(
+            img: UIImage(named: "filtros_agua")!, title: "Filtro de agua",
+            fixedProgress: 0.5),
+        ProgresoModel(
+            img: UIImage(named: "riego_agua")!,
+            title: "Instalacion de riego",
+            fixedProgress: 0.8),
+        ProgresoModel(
+            img: UIImage(named: "tanques_agua")!,
+            title: "Tanque de agua", fixedProgress: 0.3
+        ),
     ]
 
     @State private var currentThemeColor: ColorVariant = ColorPaletteVV.residuos
@@ -72,7 +83,18 @@ struct ViviendasViewVV: View {
 
     //state de notificacion
     @State private var isNotification: Bool = false
-    @State private var notificationMessage: String = "Para empezar, sube una foto de la instalación o toma una foto del área que deseas evaluar"
+    @State private var notificationMessage: String =
+        "Para empezar, sube una foto de la instalación o toma una foto del área que deseas evaluar"
+
+    @State private var isActivePopup: Bool = false
+    @State var popUpModel: ProgresoModel = ProgresoModel(
+        img: UIImage(
+            named: "house"
+        ) ?? UIImage(),
+        title: "Si",
+        fixedProgress: 0.0
+    )
+    
 
     var UISW: CGFloat = UIScreen.main.bounds.width
     var UISH: CGFloat = UIScreen.main.bounds.height
@@ -89,7 +111,8 @@ struct ViviendasViewVV: View {
             return AnyView(
                 EvaluadorViewVV(
                     currentThemeColor: $currentThemeColor, path: $path,
-                    capturedPhotos: $capturedPhotos, showPhotoPicker: $showPhotoPicker)
+                    capturedPhotos: $capturedPhotos,
+                    showPhotoPicker: $showPhotoPicker)
             )
         case .simulador:
             return AnyView(
@@ -99,12 +122,16 @@ struct ViviendasViewVV: View {
             )
 
         case .instalacion:
-            return AnyView(EmptyView())
+            return AnyView(
+                InstaladorViewVV(
+                    currentThemeColor: $currentThemeColor, path: $path
+                )
+            )
         case .none:
             return AnyView(EmptyView())
         }
     }
-    
+
     func serviceToIconId(_ service: Service) -> Int {
         switch service {
         case .agua:
@@ -122,22 +149,28 @@ struct ViviendasViewVV: View {
             ZStack(alignment: .top) {
                 // Fondo degradado
                 Rectangle()
-                  .foregroundColor(.clear)
-                  .background(
-                    LinearGradient(
-                      stops: [
-                        Gradient.Stop(color: Color(red: 0.42, green: 0.8, blue: 1), location: 0.00),
-                        Gradient.Stop(color: Color(red: 0.76, green: 0.91, blue: 1), location: 1.00),
-                      ],
-                      startPoint: UnitPoint(x: 0.5, y: 0),
-                      endPoint: UnitPoint(x: 0.5, y: 1)
+                    .foregroundColor(.clear)
+                    .background(
+                        LinearGradient(
+                            stops: [
+                                Gradient.Stop(
+                                    color: Color(
+                                        red: 0.42, green: 0.8, blue: 1),
+                                    location: 0.00),
+                                Gradient.Stop(
+                                    color: Color(
+                                        red: 0.76, green: 0.91, blue: 1),
+                                    location: 1.00),
+                            ],
+                            startPoint: UnitPoint(x: 0.5, y: 0),
+                            endPoint: UnitPoint(x: 0.5, y: 1)
+                        )
                     )
-                  )
-                  .frame(maxHeight: 300)
+                    .frame(maxHeight: 300)
                 Image("fondo_viviendas")
                     .resizable()
-                    .scaledToFit() // Mantiene la proporción de la imagen
-                    .frame(maxWidth: .infinity) // Ajusta el ancho al contenedor
+                    .scaledToFit()  // Mantiene la proporción de la imagen
+                    .frame(maxWidth: .infinity)  // Ajusta el ancho al contenedor
                 VStack(alignment: .leading, spacing: 40) {
                     // Flecha de regreso
                     if !isExpanded {
@@ -192,7 +225,9 @@ struct ViviendasViewVV: View {
                                     Button(action: {
 
                                         Task {
-                                            withAnimation(.easeInOut(duration: 0.5)) {
+                                            withAnimation(
+                                                .easeInOut(duration: 0.5)
+                                            ) {
                                                 if capturedPhotos.isEmpty {
                                                     capturedPhotos.removeAll()
                                                     isExpanded = false
@@ -202,7 +237,9 @@ struct ViviendasViewVV: View {
                                             }
 
                                             // Espera antes de restablecer hStackOffset y ocultar la notificación
-                                            try await Task.sleep(nanoseconds: UInt64(0.1 * 1_000_000_000))
+                                            try await Task.sleep(
+                                                nanoseconds: UInt64(
+                                                    0.1 * 1_000_000_000))
                                             withAnimation(.bouncy) {
                                                 hStackOffset = .zero
                                                 isNotification = false
@@ -298,20 +335,35 @@ struct ViviendasViewVV: View {
                                                     Button(action: {
                                                         Task {
                                                             // Eliminar todas las fotos capturadas y colapsar la vista
-                                                            withAnimation(.easeInOut(duration: 0.5)) {
-                                                                capturedPhotos.removeAll()
-                                                                isExpanded = false
+                                                            withAnimation(
+                                                                .easeInOut(
+                                                                    duration:
+                                                                        0.5)
+                                                            ) {
+                                                                capturedPhotos
+                                                                    .removeAll()
+                                                                isExpanded =
+                                                                    false
                                                             }
-                                                            
+
                                                             // Esperar antes de restablecer el desplazamiento y ocultar la notificación
-                                                            try await Task.sleep(nanoseconds: UInt64(0.1 * 1_000_000_000))
-                                                            withAnimation(.bouncy) {
-                                                                hStackOffset = .zero
-                                                                isNotification = false
+                                                            try await Task.sleep(
+                                                                nanoseconds:
+                                                                    UInt64(
+                                                                        0.1
+                                                                            * 1_000_000_000
+                                                                    ))
+                                                            withAnimation(
+                                                                .bouncy
+                                                            ) {
+                                                                hStackOffset =
+                                                                    .zero
+                                                                isNotification =
+                                                                    false
                                                             }
                                                         }
                                                     }
-) {
+                                                    ) {
                                                         HStack(spacing: 5) {
                                                             Text("Finalizar")
                                                                 .font(
@@ -372,8 +424,13 @@ struct ViviendasViewVV: View {
 
                                         ProgresoComponent(
                                             themeColor: $currentThemeColor,
-                                            progresoModels: progresoModelsSample,
-                                            onActionTriggered: {},
+                                            progresoModels:
+                                                progresoModelsSample,
+                                            onActionTriggered: {
+                                                model in
+                                                popUpModel = model
+                                                isActivePopup.toggle()
+                                            },
                                             onActionLeftTriggered: {},
                                             onActionRightTriggered: {}
                                         )
@@ -396,25 +453,35 @@ struct ViviendasViewVV: View {
                                         cardPosition: .right,
                                         onActionTriggered: {
                                             titlePantalla = "Evaluador"
-                                            descripcionPantalla = "Revisa la capacidad de tu hogar para soluciones ecotecnológicas."
+                                            descripcionPantalla =
+                                                "Revisa la capacidad de tu hogar para soluciones ecotecnológicas."
                                             Task {
                                                 // Desplaza el HStack hacia la izquierda
-                                                withAnimation(.easeInOut(duration: 0.9)) {
-                                                    hStackOffset = -UIScreen.main.bounds.width
+                                                withAnimation(
+                                                    .easeInOut(duration: 0.9)
+                                                ) {
+                                                    hStackOffset = -UIScreen
+                                                        .main.bounds.width
                                                 }
-                                                
+
                                                 // Agregar un retardo antes de expandir el HStack
-                                                try await Task.sleep(nanoseconds: UInt64(0.2 * 1_000_000_000))
+                                                try await Task.sleep(
+                                                    nanoseconds: UInt64(
+                                                        0.2 * 1_000_000_000))
                                                 withAnimation(.bouncy) {
                                                     isExpanded = true
                                                 }
-                                                
+
                                                 // Otro retardo antes de cambiar el viewSelected
-                                                try await Task.sleep(nanoseconds: UInt64(0.2 * 1_000_000_000))
+                                                try await Task.sleep(
+                                                    nanoseconds: UInt64(
+                                                        0.2 * 1_000_000_000))
                                                 viewSelected = .evaluador
-                                                
+
                                                 // Retardo adicional antes de activar la notificación
-                                                try await Task.sleep(nanoseconds: UInt64(0.1 * 1_000_000_000))
+                                                try await Task.sleep(
+                                                    nanoseconds: UInt64(
+                                                        0.1 * 1_000_000_000))
                                                 isNotification = true
                                             }
                                         }
@@ -429,23 +496,30 @@ struct ViviendasViewVV: View {
                                         cardPosition: .center,
                                         onActionTriggered: {
                                             titlePantalla = "Simulador"
-                                            descripcionPantalla = "Adentrate en la realidad aumentada ACORU  y conoce soluciones sostenibles."
+                                            descripcionPantalla =
+                                                "Adentrate en la realidad aumentada ACORU  y conoce soluciones sostenibles."
                                             Task {
-                                                withAnimation(.easeInOut(duration: 0.9)) {
-                                                    hStackOffset = -UIScreen.main.bounds.width
+                                                withAnimation(
+                                                    .easeInOut(duration: 0.9)
+                                                ) {
+                                                    hStackOffset = -UIScreen
+                                                        .main.bounds.width
                                                 }
 
                                                 // Agregar un retardo antes de expandir el HStack
-                                                try await Task.sleep(nanoseconds: UInt64(0.2 * 1_000_000_000))
+                                                try await Task.sleep(
+                                                    nanoseconds: UInt64(
+                                                        0.2 * 1_000_000_000))
                                                 withAnimation(.bouncy) {
                                                     isExpanded = true
                                                 }
 
                                                 // Otro retardo antes de cambiar el viewSelected
-                                                try await Task.sleep(nanoseconds: UInt64(0.2 * 1_000_000_000))
+                                                try await Task.sleep(
+                                                    nanoseconds: UInt64(
+                                                        0.2 * 1_000_000_000))
                                                 viewSelected = .simulador
                                             }
-
 
                                         }
                                     )
@@ -458,22 +532,30 @@ struct ViviendasViewVV: View {
                                         cardPosition: .left,
                                         onActionTriggered: {
                                             titlePantalla = "Instalación"
-                                            descripcionPantalla = "Convierte en realidad las soluciones con las guias paso a paso"
+                                            descripcionPantalla =
+                                                "Convierte en realidad las soluciones con las guias paso a paso"
                                             Task {
                                                 // Desplaza el HStack hacia la izquierda y muestra la notificación
-                                                withAnimation(.easeInOut(duration: 0.9)) {
-                                                    hStackOffset = -UIScreen.main.bounds.width
+                                                withAnimation(
+                                                    .easeInOut(duration: 0.9)
+                                                ) {
+                                                    hStackOffset = -UIScreen
+                                                        .main.bounds.width
                                                     isNotification = true
                                                 }
-                                                
+
                                                 // Espera antes de expandir el HStack
-                                                try await Task.sleep(nanoseconds: UInt64(0.2 * 1_000_000_000))
+                                                try await Task.sleep(
+                                                    nanoseconds: UInt64(
+                                                        0.2 * 1_000_000_000))
                                                 withAnimation(.bouncy) {
                                                     isExpanded = true
                                                 }
-                                                
+
                                                 // Espera antes de cambiar el viewSelected
-                                                try await Task.sleep(nanoseconds: UInt64(0.2 * 1_000_000_000))
+                                                try await Task.sleep(
+                                                    nanoseconds: UInt64(
+                                                        0.2 * 1_000_000_000))
                                                 viewSelected = .instalacion
                                             }
                                         }
@@ -505,13 +587,19 @@ struct ViviendasViewVV: View {
 
                 )
                 .position(x: UISW * 0.75, y: UISH * 0.17)
+                ProgresoPopUp(
+                    currentThemeColor: $currentThemeColor,
+                    model: $popUpModel,
+                    isVisible: $isActivePopup
+                )
+                .position(x: UISW / 2, y: UISH / 2)  // Centrado en la pantalla
 
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
             .ignoresSafeArea()
             .sheet(isPresented: $showPhotoPicker) {
-                        PhotoPicker(selectedPhotos: $capturedPhotos)  // Presenta el selector de fotos
-                    }
+                PhotoPicker(selectedPhotos: $capturedPhotos)  // Presenta el selector de fotos
+            }
             .navigationDestination(for: String.self) { id in
                 if id == "Camara" {
                     CameraViewVV(path: $path, capturedPhotos: $capturedPhotos)
@@ -520,7 +608,12 @@ struct ViviendasViewVV: View {
                     InsideSimuladorVV(
                         path: $path,
                         currentTheme: $currentThemeColor,
-                        iconName: .constant(icons.first { $0.id == serviceToIconId($selectedService.wrappedValue) }?.name ?? "Gota")
+                        iconName: .constant(
+                            icons.first {
+                                $0.id
+                                    == serviceToIconId(
+                                        $selectedService.wrappedValue)
+                            }?.name ?? "Gota")
                     )
                 }
             }

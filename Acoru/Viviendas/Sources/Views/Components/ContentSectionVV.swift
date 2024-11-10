@@ -18,11 +18,15 @@ struct ContentSectionView: View {
 
     var body: some View {
         VStack(spacing: 30) {
-            Text(capturedPhotos.isEmpty ? "Captura inicial de la instalación" : isLoading ? "Evaluando..." : "Resultados")
-                .font(customFont("Poppins", size: 26, weight: .bold))
-                .foregroundColor(.black)
+            Text(
+                capturedPhotos.isEmpty
+                    ? "Captura inicial de la instalación"
+                    : isLoading ? "Evaluando..." : "Resultados"
+            )
+            .font(customFont("Poppins", size: 26, weight: .bold))
+            .foregroundColor(.black)
 
-            if progress < 0.9 {
+            if progress < 0.9 && !capturedPhotos.isEmpty {
                 ProgresoComponent(
                     themeColor: $currentThemeColor,
                     progress: $progress,
@@ -32,15 +36,20 @@ struct ContentSectionView: View {
             }
 
             if !capturedPhotos.isEmpty {
-                ResultsListView(resultModel: $resultModel, currentThemeColor: $currentThemeColor)
-                    .padding(30)
-                    .frame(maxWidth: .infinity, maxHeight: 424.43)
-                    .background(Color(ColorPaletteVV.gris.normal))
-                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                ResultsListView(
+                    resultModel: $resultModel,
+                    currentThemeColor: $currentThemeColor
+                )
+                .padding(30)
+                .frame(maxWidth: .infinity, maxHeight: 424.43)
+                .background(Color(ColorPaletteVV.gris.normal))
+                .clipShape(RoundedRectangle(cornerRadius: 10))
             }
 
             if capturedPhotos.isEmpty {
-                UploadButtonSection(showPhotoPicker: $showPhotoPicker, currentThemeColor: $currentThemeColor, path: $path)
+                UploadButtonSection(
+                    showPhotoPicker: $showPhotoPicker,
+                    currentThemeColor: $currentThemeColor, path: $path)
             }
         }
         .padding(.horizontal, 30)

@@ -16,7 +16,7 @@ struct UploadButtonSection: View {
         HStack(spacing: 20) {
             ButtonEvaluador(
                 title: "Subir fotos",
-                icon: Image(systemName: "camera.viewfinder"),
+                icon: Image("upload"),
                 currentThemeColor: $currentThemeColor
             ) {
                 withAnimation(.bouncy) {

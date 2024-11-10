@@ -2,6 +2,7 @@ import SwiftUI
 
 struct ProgresoModel {
     let img: UIImage
+    let title: String
     let fixedProgress: Double
 }
 
@@ -16,7 +17,7 @@ struct ProgresoComponent: View {
     var progresoModels: [ProgresoModel] = []
     @State private var currentModelIndex: Int = 0
 
-    var onActionTriggered: (() -> Void)? // Closure para manejar el evento
+    var onActionTriggered: ((ProgresoModel) -> Void)?  // Closure para manejar el evento
     var onActionLeftTriggered: (() -> Void)?
     var onActionRightTriggered: (() -> Void)?
     var activateDecorated: Bool = true
@@ -25,10 +26,13 @@ struct ProgresoComponent: View {
         HStack {
             if activateDecorated {
                 Button(action: {
-                    withAnimation(.easeInOut){
+                    withAnimation(.easeInOut) {
                         if !progresoModels.isEmpty {
-                                                currentModelIndex = currentModelIndex > 0 ? currentModelIndex - 1 : progresoModels.count - 1
-                                            }
+                            currentModelIndex =
+                                currentModelIndex > 0
+                                ? currentModelIndex - 1
+                                : progresoModels.count - 1
+                        }
                     }
                     onActionLeftTriggered?()
                 }) {
@@ -55,22 +59,25 @@ struct ProgresoComponent: View {
                         width: CGFloat(currentProgress) * maxWidth,
                         height: maxHeight
                     )
-                    .animation(.easeInOut(duration: 0.5), value: currentProgress)
+                    .animation(
+                        .easeInOut(duration: 0.5), value: currentProgress)
 
                 if activateDecorated {
                     VStack {
                         Button(action: {
-                            onActionTriggered?()
+                            onActionTriggered?(model)
                         }) {
                             // Muestra la imagen actual del progresoModel si está disponible
-                            ZStack{
+                            ZStack {
                                 Circle()
                                     .fill(Color.white)
                                     .frame(width: 50, height: 50)
                                     .overlay(
-                                                Circle()
-                                                    .stroke(Color(themeColor.normal), lineWidth: 2) // Borde de color de currentThemeColor
-                                            )
+                                        Circle()
+                                            .stroke(
+                                                Color(themeColor.normal),
+                                                lineWidth: 2)  // Borde de color de currentThemeColor
+                                    )
                                 if let currentImage = currentImage {
                                     Image(uiImage: currentImage)
                                         .resizable()
@@ -87,10 +94,12 @@ struct ProgresoComponent: View {
 
             if activateDecorated {
                 Button(action: {
-                    withAnimation(.easeInOut){
+                    withAnimation(.easeInOut) {
                         if !progresoModels.isEmpty {
-                                                currentModelIndex = currentModelIndex < progresoModels.count - 1 ? currentModelIndex + 1 : 0
-                                            }
+                            currentModelIndex =
+                                currentModelIndex < progresoModels.count - 1
+                                ? currentModelIndex + 1 : 0
+                        }
                     }
                     onActionRightTriggered?()
                 }) {
@@ -124,49 +133,58 @@ struct ProgresoComponent: View {
             return progresoModels[currentModelIndex].img
         }
     }
-}
-
-struct ProgresoComponent_Previews: PreviewProvider {
-    @State static var themeColor = ColorPaletteVV.agua
-    @State static var progressValue = 0.1
-    static var progresoModelsSample = [
-        ProgresoModel(img: UIImage(systemName: "house.fill")!, fixedProgress: 0.2),
-        ProgresoModel(img: UIImage(systemName: "camera.fill")!, fixedProgress: 0.5),
-        ProgresoModel(img: UIImage(systemName: "flame.fill")!, fixedProgress: 0.8)
-    ]
-
-    static var previews: some View {
-        Group {
-            // Usando Binding
-            ProgresoComponent(
-                themeColor: $themeColor,
-                progress: $progressValue,
-                onActionTriggered: {},
-                onActionLeftTriggered: {},
-                onActionRightTriggered: {}
-            )
-            .previewDisplayName("Con Binding")
-
-            // Usando un valor fijo
-            ProgresoComponent(
-                themeColor: $themeColor,
-                fixedProgress: 0.7,
-                onActionTriggered: {},
-                onActionLeftTriggered: {},
-                onActionRightTriggered: {}
-            )
-            .previewDisplayName("Con Valor Fijo")
-
-            // Usando array de progresoModels
-            ProgresoComponent(
-                themeColor: $themeColor,
-                progresoModels: progresoModelsSample,
-                onActionTriggered: {},
-                onActionLeftTriggered: {},
-                onActionRightTriggered: {}
-            )
-            .previewDisplayName("Con ProgresoModel Array")
+    
+    //mandar el title
+    private var model: ProgresoModel {
+        if progresoModels.isEmpty {
+            return ProgresoModel(img: UIImage(systemName: "house.fill")!,title: "Titulo"
+                                 ,fixedProgress: 0.2)
+        } else {
+            return progresoModels[currentModelIndex]
         }
     }
 }
 
+//struct ProgresoComponent_Previews: PreviewProvider {
+//    @State static var themeColor = ColorPaletteVV.agua
+//    @State static var progressValue = 0.1
+//    static var progresoModelsSample = [
+//        ProgresoModel(img: UIImage(systemName: "house.fill")!, fixedProgress: 0.2),
+//        ProgresoModel(img: UIImage(systemName: "camera.fill")!, fixedProgress: 0.5),
+//        ProgresoModel(img: UIImage(systemName: "flame.fill")!, fixedProgress: 0.8)
+//    ]
+//
+//    static var previews: some View {
+//        Group {
+//            // Usando Binding
+//            ProgresoComponent(
+//                themeColor: $themeColor,
+//                progress: $progressValue,
+//                onActionTriggered: {},
+//                onActionLeftTriggered: {},
+//                onActionRightTriggered: {}
+//            )
+//            .previewDisplayName("Con Binding")
+//
+//            // Usando un valor fijo
+//            ProgresoComponent(
+//                themeColor: $themeColor,
+//                fixedProgress: 0.7,
+//                onActionTriggered: {},
+//                onActionLeftTriggered: {},
+//                onActionRightTriggered: {}
+//            )
+//            .previewDisplayName("Con Valor Fijo")
+//
+//            // Usando array de progresoModels
+//            ProgresoComponent(
+//                themeColor: $themeColor,
+//                progresoModels: progresoModelsSample,
+//                onActionTriggered: {},
+//                onActionLeftTriggered: {},
+//                onActionRightTriggered: {}
+//            )
+//            .previewDisplayName("Con ProgresoModel Array")
+//        }
+//    }
+//}

@@ -346,7 +346,7 @@ struct InstaladorView: View{
                                 themeColor: $themeColor,
                                 fixedProgress: 0.5,
                                 maxWidth: 500,
-                                onActionTriggered: {
+                                onActionTriggered: { model in
                                     
                                 },
                                 onActionLeftTriggered: {
