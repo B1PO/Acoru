@@ -33,13 +33,8 @@ struct simuladorViewVV: View {
                 .foregroundColor(.white)
                 .background(Color(currentTheme.normal))
                 .cornerRadius(25)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 25)
-                        .stroke(Color(currentTheme.dark), lineWidth: 2)
-                )
-                .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 6)
             }
-            .padding(.top, 16)
+            .padding(.top, 20)
             .padding(.leading, 850)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)

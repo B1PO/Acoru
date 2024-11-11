@@ -10,14 +10,16 @@ import SwiftUI
 struct InstaladorViewVV: View {
     @Binding var currentThemeColor: ColorVariant
     @Binding var path: NavigationPath
+    
+    
 
     var body: some View {
-        HStack {
+        ZStack {
+           
         }
     }
 
 }
-
 
 struct InstaladorView_Previews: PreviewProvider {
     @State static var themeColor = ColorPaletteVV.agua

@@ -87,6 +87,8 @@ struct ViviendasViewVV: View {
         "Para empezar, sube una foto de la instalación o toma una foto del área que deseas evaluar"
 
     @State private var isActivePopup: Bool = false
+    @State private var isActivePopUpInstalacion: Bool = false
+
     @State var popUpModel: ProgresoModel = ProgresoModel(
         img: UIImage(
             named: "house"
@@ -94,7 +96,6 @@ struct ViviendasViewVV: View {
         title: "Si",
         fixedProgress: 0.0
     )
-    
 
     var UISW: CGFloat = UIScreen.main.bounds.width
     var UISH: CGFloat = UIScreen.main.bounds.height
@@ -140,6 +141,61 @@ struct ViviendasViewVV: View {
             return 1
         case .electricidad:
             return 2
+        }
+    }
+
+    func backToExpand() {
+        Task {
+            withAnimation(
+                .easeInOut(duration: 0.5)
+            ) {
+                if capturedPhotos.isEmpty {
+                    capturedPhotos.removeAll()
+                    isExpanded = false
+                } else {
+                    capturedPhotos.removeAll()
+                }
+            }
+
+            // Espera antes de restablecer hStackOffset y ocultar la notificación
+            try await Task.sleep(
+                nanoseconds: UInt64(
+                    0.1 * 1_000_000_000))
+            withAnimation(.bouncy) {
+                hStackOffset = .zero
+                isNotification = false
+            }
+        }
+    }
+    
+    func toInstalacion(){
+        Task {
+            // Desplaza el HStack hacia la izquierda y muestra la notificación
+            isActivePopUpInstalacion.toggle()
+            withAnimation(
+                .easeInOut(duration: 0.9)
+            ) {
+                hStackOffset = -UIScreen
+                    .main.bounds.width
+            }
+
+            // Espera antes de expandir el HStack
+            try await Task.sleep(
+                nanoseconds: UInt64(
+                    0.2 * 1_000_000_000))
+            
+            withAnimation(.bouncy) {
+                isExpanded = true
+            }
+
+            // Espera antes de cambiar el viewSelected
+            try await Task.sleep(
+                nanoseconds: UInt64(
+                    0.2 * 1_000_000_000))
+           
+            viewSelected = .instalacion
+            
+            
         }
     }
 
@@ -210,7 +266,6 @@ struct ViviendasViewVV: View {
 
                     // Recuadro blanco con bordes redondeados
                     ZStack(alignment: .top) {
-
                         Rectangle()
                             .fill(Color(red: 0.96, green: 0.97, blue: 0.99))
                             .cornerRadius(
@@ -223,29 +278,7 @@ struct ViviendasViewVV: View {
                             if isExpanded {
                                 HStack {
                                     Button(action: {
-
-                                        Task {
-                                            withAnimation(
-                                                .easeInOut(duration: 0.5)
-                                            ) {
-                                                if capturedPhotos.isEmpty {
-                                                    capturedPhotos.removeAll()
-                                                    isExpanded = false
-                                                } else {
-                                                    capturedPhotos.removeAll()
-                                                }
-                                            }
-
-                                            // Espera antes de restablecer hStackOffset y ocultar la notificación
-                                            try await Task.sleep(
-                                                nanoseconds: UInt64(
-                                                    0.1 * 1_000_000_000))
-                                            withAnimation(.bouncy) {
-                                                hStackOffset = .zero
-                                                isNotification = false
-                                            }
-                                        }
-
+                                        backToExpand()
                                     }) {
                                         Image(systemName: "chevron.left")
                                             .font(.title)
@@ -534,30 +567,7 @@ struct ViviendasViewVV: View {
                                             titlePantalla = "Instalación"
                                             descripcionPantalla =
                                                 "Convierte en realidad las soluciones con las guias paso a paso"
-                                            Task {
-                                                // Desplaza el HStack hacia la izquierda y muestra la notificación
-                                                withAnimation(
-                                                    .easeInOut(duration: 0.9)
-                                                ) {
-                                                    hStackOffset = -UIScreen
-                                                        .main.bounds.width
-                                                    isNotification = true
-                                                }
-
-                                                // Espera antes de expandir el HStack
-                                                try await Task.sleep(
-                                                    nanoseconds: UInt64(
-                                                        0.2 * 1_000_000_000))
-                                                withAnimation(.bouncy) {
-                                                    isExpanded = true
-                                                }
-
-                                                // Espera antes de cambiar el viewSelected
-                                                try await Task.sleep(
-                                                    nanoseconds: UInt64(
-                                                        0.2 * 1_000_000_000))
-                                                viewSelected = .instalacion
-                                            }
+                                            toInstalacion()
                                         }
 
                                     )
@@ -593,7 +603,13 @@ struct ViviendasViewVV: View {
                     isVisible: $isActivePopup
                 )
                 .position(x: UISW / 2, y: UISH / 2)  // Centrado en la pantalla
-
+                InstalacionPopUp(
+                    currentThemeColor: $currentThemeColor,
+                    isVisible: $isActivePopUpInstalacion,
+                    path: $path,
+                    callback: backToExpand
+                )
+                .position(x: UISW / 2, y: UISH / 2)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
             .ignoresSafeArea()
@@ -615,6 +631,9 @@ struct ViviendasViewVV: View {
                                         $selectedService.wrappedValue)
                             }?.name ?? "Gota")
                     )
+                }
+                if id == "instalacion_Captación de Agua" {
+                    InstalacionStep(id: "Captación de Agua", id_type: 0 , callback: toInstalacion,path: $path, currentThemeColor: $currentThemeColor)
                 }
             }
         }

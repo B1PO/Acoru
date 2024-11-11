@@ -21,10 +21,11 @@ struct ProgresoComponent: View {
     var onActionLeftTriggered: (() -> Void)?
     var onActionRightTriggered: (() -> Void)?
     var activateDecorated: Bool = true
+    var hiddenActions: Bool = false
 
     var body: some View {
         HStack {
-            if activateDecorated {
+            if activateDecorated && !hiddenActions {
                 Button(action: {
                     withAnimation(.easeInOut) {
                         if !progresoModels.isEmpty {
@@ -65,7 +66,9 @@ struct ProgresoComponent: View {
                 if activateDecorated {
                     VStack {
                         Button(action: {
-                            onActionTriggered?(model)
+                            if(!hiddenActions){
+                                onActionTriggered?(model)
+                            }
                         }) {
                             // Muestra la imagen actual del progresoModel si está disponible
                             ZStack {
@@ -92,7 +95,7 @@ struct ProgresoComponent: View {
             }
             .frame(maxWidth: maxWidth)
 
-            if activateDecorated {
+            if activateDecorated && !hiddenActions {
                 Button(action: {
                     withAnimation(.easeInOut) {
                         if !progresoModels.isEmpty {

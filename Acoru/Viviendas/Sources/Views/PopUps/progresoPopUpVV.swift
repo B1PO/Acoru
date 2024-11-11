@@ -52,7 +52,7 @@ struct ProgresoPopUp: View {
                             Image(uiImage: model.img)
                                 .resizable()
                                 .scaledToFit()
-                                .frame(maxWidth: 100, maxHeight: 100)
+                                .frame(width: 140, height: 140)
                                 .clipShape(Circle())
                                 .overlay(
                                     Circle()
@@ -60,20 +60,20 @@ struct ProgresoPopUp: View {
                                             Color(currentThemeColor.dark),
                                             lineWidth: 4)
                                 )
-                                .padding()
 
                             Text(model.title)
                                 .font(
                                     customFont(
-                                        "Poppins", size: 30, weight: .bold)
+                                        "Poppins", size: 28, weight: .bold)
                                 )
                                 .foregroundColor(.black)
+                                .padding(.top, 10)
 
-                            VStack {
+                            VStack (spacing: 10){
                                 Text("Pasos completados")
                                     .font(
                                         customFont(
-                                            "Poppins", size: 26, weight: .bold)
+                                            "Poppins", size: 22, weight: .bold)
                                     )
                                     .foregroundColor(
                                         Color(currentThemeColor.dark))
@@ -84,6 +84,7 @@ struct ProgresoPopUp: View {
                                         fixedProgress: model.fixedProgress,
                                         activateDecorated: false
                                     )
+                                    .padding(.leading, 40)
 
                                     Text(currentStepText())  // Mostrar el texto de progreso
                                         .font(
@@ -115,7 +116,7 @@ struct ProgresoPopUp: View {
                     }) {
                         Text("Continuar instalación")
                             .font(
-                                customFont("Poppins", size: 24, weight: .bold)
+                                customFont("Poppins", size: 24, weight: .regular)
                             )
                             .foregroundColor(.white)
                             .padding(.horizontal, 30)
