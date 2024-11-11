@@ -1,60 +1,135 @@
 //
-//  zonasViewZR.swift
+//  inspectorComponentZR.swift
 //  Acoru
 //
-//  Created by Mario Moreno on 10/17/24.
+//  Created by Mauricio Betancourt Mora on 14/10/24.
 //
-
 import SwiftUI
 
 struct zonasViewZR: View {
+    var UISW: CGFloat = UIScreen.main.bounds.width
+    var UISH: CGFloat = UIScreen.main.bounds.height
+    
+    var onClose: () -> Void // Función para regresar a la vista principal
+
     var body: some View {
         ZStack {
-            LinearGradient(gradient: Gradient(colors: [Color(red: 0.1, green: 0.7, blue: 0.9), Color(red: 0.4, green: 0.5, blue: 0.9)]),
-                           startPoint: .top,
-                           endPoint: .bottom)
-
-            HStack {
-                
-                VStack(alignment: .leading) {
-                    
-                    Button(action: {}){ // back
-                        Image(systemName: "chevron.left")
-                            .foregroundStyle(.white)
-                            .font(.system(size: 25))
-                            .padding(.leading, 50)
-                            .padding(.top)
-                            .padding(.bottom)
-                    }
-                    
-                    Text("Zonas de riesgo")
-                        .foregroundStyle(.white)
-                        .font(.largeTitle)
-                        .bold()
-                        .padding(.leading, 50)
-                        .padding(.bottom)
-                    Text("Gestiona tu experiencia agrícola")
-                        .font(.title3)
-                        .padding(.leading, 50)
-                        .padding(.bottom)
-                    
-                    Spacer()
-                    
-                }
-                Spacer()
-                //aquí va a ir el RiveAnimation
-                
+            // Gradiente de fondo
+            LinearGradient(
+                gradient: Gradient(colors: [Color(red: 0.46, green: 0.76, blue: 0.87), Color(red: 0.85, green: 0.95, blue: 0.97)]),
+                startPoint: .top,
+                endPoint: .bottom
+            )
+            .frame(width: UISW, height: UISH * 0.4)
+            .edgesIgnoringSafeArea(.all)
+            .position(x: UISW * 0.5 ,y: UISH * 0.1)
+            
+            // Botón de regresar
+            Button(action: {
+                onClose() // Llamada a la función para cerrar la vista
+            }) {
+                Image(systemName: "chevron.left")
+                    .resizable()
+                    .scaledToFit()
+                    .bold()
+                    .foregroundColor(.white)
+                    .frame(width: 15)
+                    .position(x: UISW * 0.05, y: UISH * 0.05)
             }
             
-            VStack {
-                Spacer()
-                marcarZonaComponentZR()
+            // Marco blanco con contenido
+            RoundedRectangle(cornerRadius: 20)
+                .fill(Color.white)
+                .frame(width: UISW, height: UISH)
+                .position(x: UISW * 0.5, y: UISH * 0.76)
+            
+            // Texto del header
+            VStack(alignment: .leading) {
+                Text("Zonas de riesgo")
+                    .font(.custom("Poppins", size: 35))
+                    .bold()
+                
+                Text("Previene, aprende y contribuye")
+                    .font(.custom("Poppins", size: 15))
+                    .foregroundColor(.black)
+                    .offset(y: 20)
+                    .opacity(0.8)
             }
-        
-        } .ignoresSafeArea()
+            .position(x: UISW * 0.16, y: UISH * 0.145)
+            
+            // Componentes adicionales
+          
+            
+            Text("Marcar zona")
+                .bold()
+                .font(.custom("Poppins", size: 18))
+                .position(x: UISW * 0.1, y: UISH * 0.33)
+            
+            // Botón de "Monitorear"
+            Button(action: {
+                // Acción de monitoreo
+            }) {
+                HStack {
+                    Text("Rancho Don Pepe")
+                    
+                }
+                .font(.custom("Poppins", size: 15))
+                .bold()
+                .padding(.horizontal)
+                .padding(.vertical, 10)
+                .background(Color.teal)
+                .foregroundColor(.black)
+                .cornerRadius(15)
+                
+                                
+            }
+            .position(x: UISW * 0.125, y: UISH * 0.42)
+           
+            
+            // Rectángulos adicionales con textos
+            RoundedRectangle(cornerRadius: 20)
+                .fill(Color.gray.opacity(0.2))
+                .frame(width: UISW * 0.425, height: UISH * 0.6)
+                .overlay(
+                    Text("Localiza zonas de riesgo")
+                        .font(.footnote)
+                        .foregroundColor(.gray)
+                        .padding()
+                )
+                .position(x: UISW * 0.24, y: UISH * 0.658)
+            VStack {
+                RoundedRectangle(cornerRadius: 15)
+                    .fill(Color.brown)
+                    .frame(width: UISW * 0.47, height: UISH * 0.16)
+                    .overlay(
+                        Text("Inspector")
+                            .foregroundColor(.white)
+                            .font(.footnote)
+                            .bold()
+                    )
+                    .position(x: UISW * 0.720, y: UISH * 0.43)
+            }
+            Text("Tutorial basado en el reglamento")
+                .bold()
+                .font(.custom("Poppins", size: 18))
+                .position(x: UISW * 0.63, y: UISH * 0.54)
+            
+            RoundedRectangle(cornerRadius: 20)
+                .fill(Color.gray.opacity(0.2))
+                .frame(width: UISW * 0.47, height: UISH * 0.38)
+                .overlay(
+                    Text("tutorial")
+                        .font(.footnote)
+                        .foregroundColor(.gray)
+                        .padding()
+                )
+                .position(x: UISW * 0.720, y: UISH * 0.758)
+        }
     }
 }
 
+// Vista previa para el archivo
 #Preview {
-    zonasViewZR()
+    zonasViewZR(onClose: {})
 }
+
