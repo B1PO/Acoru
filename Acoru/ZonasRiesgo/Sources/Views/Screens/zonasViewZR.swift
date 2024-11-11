@@ -87,16 +87,21 @@ struct zonasViewZR: View {
            
             
             // Rectángulos adicionales con textos
-            RoundedRectangle(cornerRadius: 20)
-                .fill(Color.gray.opacity(0.2))
-                .frame(width: UISW * 0.425, height: UISH * 0.6)
-                .overlay(
-                    Text("Localiza zonas de riesgo")
-                        .font(.footnote)
-                        .foregroundColor(.gray)
-                        .padding()
-                )
+            ZStack {
+                
+               
+                RoundedRectangle(cornerRadius: 20)
+                   // .fill(Color.gray.opacity(0.2)) // Fondo semitransparente encima de la imagen
+                    .frame(width: UISW * 0.425, height: UISH * 0.567)
+                    .overlay(
+                        Text("Localiza zonas de riesgo")
+                            .font(.footnote)
+                            .foregroundColor(.gray)
+                            .padding()
+                    )
+            }
                 .position(x: UISW * 0.24, y: UISH * 0.658)
+                .clipShape(RoundedRectangle(cornerRadius: 20))
             VStack {
                 RoundedRectangle(cornerRadius: 15)
                     .fill(Color.brown)
