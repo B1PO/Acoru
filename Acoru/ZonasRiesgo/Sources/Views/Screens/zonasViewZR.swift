@@ -15,6 +15,7 @@ struct zonasViewZR: View {
                            endPoint: .bottom)
 
             HStack {
+                
                 VStack(alignment: .leading) {
                     
                     Button(action: {}){ // back

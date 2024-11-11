@@ -12,6 +12,8 @@ struct marcarZonaComponentZR: View {
         
         VStack {
             CarruselComponentZR()
+            
+            
                     
                 }
                 .frame(maxWidth: .infinity, maxHeight: 600)
