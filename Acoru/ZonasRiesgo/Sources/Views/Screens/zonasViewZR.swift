@@ -136,5 +136,6 @@ struct zonasViewZR: View {
 // Vista previa para el archivo
 #Preview {
     zonasViewZR(onClose: {})
+    zonasViewZR(onClose: {})
 }
 
