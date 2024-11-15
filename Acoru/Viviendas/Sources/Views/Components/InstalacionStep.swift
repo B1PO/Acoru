@@ -33,21 +33,20 @@ let instalaciones = [
         name: "Captación de Agua",
         materials: [
             Material(
-                icon: "pipe.and.drop",
+                icon: "pvc",
                 description: "Canaletas de PVC o metal (para dirigir el agua)"),
             Material(
-                icon: "mesh.fill",
+                icon: "malla",
                 description:
                     "Filtro de malla gruesa (para evitar el paso de hojas y residuos grandes)"
             ),
             Material(
-                icon: "tank",
+                icon: "contenedor",
                 description:
                     "Contenedor de plástico o cisterna (para almacenar el agua)"
             ),
-            Material(icon: "pipe", description: "Tubos de PVC para conducción"),
             Material(
-                icon: "cover",
+                icon: "tapa",
                 description: "Tapa para evitar la entrada de contaminantes"),
         ]
     ),
@@ -236,9 +235,13 @@ struct InstalacionStep: View {
                                         ForEach(currentMaterials, id: \.description)
                                         { material in
                                             HStack(spacing: 20) {
-                                                RoundedRectangle(cornerRadius: 10)
-                                                    .fill(Color.gray.opacity(0.3))
+                                                Image(material.icon)
+                                                    .resizable()
+                                                    .aspectRatio(contentMode: .fit)
                                                     .frame(width: 80, height: 80)
+                                                    .background(Color.gray.opacity(0.3))
+                                                    .clipShape(RoundedRectangle(cornerRadius: 10))
+
 
                                                 Text(material.description)
                                                     .font(.subheadline)
@@ -301,10 +304,13 @@ struct InstalacionStep: View {
                         .foregroundColor(.black)
                         .padding(.top,60)
                     
-                    Circle()
-                        .fill(Color(ColorPaletteVV.residuos.normal))
+                    Image("tools")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
                         .frame(width: 280, height: 280)
                         .padding(.top, 40)
+                        .clipShape(Circle())
+
                     
                     Spacer()
                     
