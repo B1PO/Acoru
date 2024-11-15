@@ -38,8 +38,7 @@ struct AcoruApp: App {
     @StateObject private var authService = AuthService() // Cambiamos a AuthService
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environmentObject(authService)
+            MainView()
 //            CameraViewVV()
 //                .ignoresSafeArea()
         }

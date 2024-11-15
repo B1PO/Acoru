@@ -458,7 +458,7 @@ struct ZoneDetailView: View {
             .frame(width: 400, height: .infinity) // Ancho fijo de 400 y altura infinita
             .background(Color.white)
             .cornerRadius(16)
-            .transition(.move(edge: .trailing))
+            .transition(.opacity)
         }
         .animation(.easeInOut, value: selectedZone)
     }

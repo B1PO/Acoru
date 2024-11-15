@@ -1,28 +1,29 @@
-//
-//  inspectorComponentZR.swift
-//  Acoru
-//
-//  Created by Mauricio Betancourt Mora on 14/10/24.
-//
 import SwiftUI
 
 struct zonasViewZR: View {
     var UISW: CGFloat = UIScreen.main.bounds.width
     var UISH: CGFloat = UIScreen.main.bounds.height
-    
     var onClose: () -> Void // Función para regresar a la vista principal
+
+    @State private var showMapView = false // Estado para controlar la presentación de la pantalla completa
 
     var body: some View {
         ZStack {
             // Gradiente de fondo
             LinearGradient(
-                gradient: Gradient(colors: [Color(red: 0.46, green: 0.76, blue: 0.87), Color(red: 0.85, green: 0.95, blue: 0.97)]),
+                gradient: Gradient(colors: [Color(red: 116/255, green: 140/255, blue: 146/255), Color(red: 141/255, green: 226/255, blue: 250/255)]),
                 startPoint: .top,
                 endPoint: .bottom
             )
             .frame(width: UISW, height: UISH * 0.4)
             .edgesIgnoringSafeArea(.all)
-            .position(x: UISW * 0.5 ,y: UISH * 0.1)
+            .position(x: UISW * 0.5, y: UISH * 0.1)
+            
+            Image("zonasHeader")
+                .resizable()
+                .scaledToFit()
+                .scaleEffect(1.1)
+                .position(x: UISW * 0.5, y: UISH * 0.183)
             
             // Botón de regresar
             Button(action: {
@@ -39,7 +40,7 @@ struct zonasViewZR: View {
             
             // Marco blanco con contenido
             RoundedRectangle(cornerRadius: 20)
-                .fill(Color.white)
+                .fill(Color.frameColor)
                 .frame(width: UISW, height: UISH)
                 .position(x: UISW * 0.5, y: UISH * 0.76)
             
@@ -55,63 +56,33 @@ struct zonasViewZR: View {
                     .offset(y: 20)
                     .opacity(0.8)
             }
-            .position(x: UISW * 0.16, y: UISH * 0.145)
+            .position(x: UISW * 0.16, y: UISH * 0.13    )
             
-            // Componentes adicionales
-          
-            
+            // Texto adicional
             Text("Marcar zona")
                 .bold()
                 .font(.custom("Poppins", size: 18))
                 .position(x: UISW * 0.1, y: UISH * 0.33)
-            
-            // Botón de "Monitorear"
+
+            // Imagen "imagenMapaZR" que abre la pantalla completa con la vista del mapa
             Button(action: {
-                // Acción de monitoreo
+                showMapView = true
             }) {
-                HStack {
-                    Text("Rancho Don Pepe")
-                    
-                }
-                .font(.custom("Poppins", size: 15))
-                .bold()
-                .padding(.horizontal)
-                .padding(.vertical, 10)
-                .background(Color.teal)
-                .foregroundColor(.black)
-                .cornerRadius(15)
-                
-                                
-            }
-            .position(x: UISW * 0.125, y: UISH * 0.42)
-           
-            
-            // Rectángulos adicionales con textos
-            ZStack {
-                
-               
-                RoundedRectangle(cornerRadius: 20)
-                   // .fill(Color.gray.opacity(0.2)) // Fondo semitransparente encima de la imagen
+                Image("imagenMapaZR")
+                    .resizable()
                     .frame(width: UISW * 0.425, height: UISH * 0.567)
-                    .overlay(
-                        Text("Localiza zonas de riesgo")
-                            .font(.footnote)
-                            .foregroundColor(.gray)
-                            .padding()
-                    )
+                    .clipShape(RoundedRectangle(cornerRadius: 20))
             }
-                .position(x: UISW * 0.24, y: UISH * 0.658)
-                .clipShape(RoundedRectangle(cornerRadius: 20))
+            .position(x: UISW * 0.24, y: UISH * 0.658)
+            .fullScreenCover(isPresented: $showMapView) {
+                inspectorViewZR() // Muestra la vista del mapa en pantalla completa
+            }
+            
             VStack {
-                RoundedRectangle(cornerRadius: 15)
-                    .fill(Color.brown)
+                Image("inspectorZRImage")
+                    .resizable()
+                    .scaledToFit()
                     .frame(width: UISW * 0.47, height: UISH * 0.16)
-                    .overlay(
-                        Text("Inspector")
-                            .foregroundColor(.white)
-                            .font(.footnote)
-                            .bold()
-                    )
                     .position(x: UISW * 0.720, y: UISH * 0.43)
             }
             Text("Tutorial basado en el reglamento")
@@ -119,15 +90,10 @@ struct zonasViewZR: View {
                 .font(.custom("Poppins", size: 18))
                 .position(x: UISW * 0.63, y: UISH * 0.54)
             
-            RoundedRectangle(cornerRadius: 20)
-                .fill(Color.gray.opacity(0.2))
+            Image("CardsZR")
+                .resizable()
+                .scaledToFit()
                 .frame(width: UISW * 0.47, height: UISH * 0.38)
-                .overlay(
-                    Text("tutorial")
-                        .font(.footnote)
-                        .foregroundColor(.gray)
-                        .padding()
-                )
                 .position(x: UISW * 0.720, y: UISH * 0.758)
         }
     }
@@ -136,6 +102,4 @@ struct zonasViewZR: View {
 // Vista previa para el archivo
 #Preview {
     zonasViewZR(onClose: {})
-    zonasViewZR(onClose: {})
 }
-

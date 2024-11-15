@@ -52,7 +52,7 @@ struct ProgresoPopUp: View {
                             Image(uiImage: model.img)
                                 .resizable()
                                 .scaledToFit()
-                                .frame(width: 140, height: 140)
+                                .frame(width: 120)
                                 .clipShape(Circle())
                                 .overlay(
                                     Circle()
@@ -73,7 +73,7 @@ struct ProgresoPopUp: View {
                                 Text("Pasos completados")
                                     .font(
                                         customFont(
-                                            "Poppins", size: 22, weight: .bold)
+                                            "Poppins", size: 22, weight: .regular)
                                     )
                                     .foregroundColor(
                                         Color(currentThemeColor.dark))
@@ -90,7 +90,7 @@ struct ProgresoPopUp: View {
                                         .font(
                                             customFont(
                                                 "Poppins", size: 20,
-                                                weight: .bold)
+                                                weight: .regular)
                                         )
                                         .foregroundColor(.gray.opacity(0.5))
                                 }
@@ -101,7 +101,6 @@ struct ProgresoPopUp: View {
                     .frame(maxWidth: 600, maxHeight: 400)
                     .background(Color.white)
                     .clipShape(RoundedRectangle(cornerRadius: 20))
-                    .shadow(radius: 10)
                     .offset(y: isOnScreen ? 0 : UIScreen.main.bounds.height)  // Animación de entrada/salida desde abajo
                     .animation(.easeInOut(duration: 0.3), value: isOnScreen)
                     .onAppear {
@@ -125,7 +124,6 @@ struct ProgresoPopUp: View {
                                 Color(red: 0.49, green: 0.76, blue: 0.46)
                             )
                             .clipShape(RoundedRectangle(cornerRadius: 25))
-                            .shadow(radius: 5)
                     }
                     .offset(y: isOnScreen ? -30 : UIScreen.main.bounds.height)  // Animación de entrada/salida del botón
                     .animation(.easeInOut(duration: 0.3), value: isOnScreen)  // Agrega animación al botón también

@@ -237,6 +237,7 @@ struct ViviendasViewVV: View {
                                 }) {
                                     Image(systemName: "chevron.left")
                                         .font(.title)
+                                        .bold()
                                         .foregroundColor(.white)
                                         .padding(.horizontal)
                                         .padding(.top, 20)
@@ -282,6 +283,7 @@ struct ViviendasViewVV: View {
                                     }) {
                                         Image(systemName: "chevron.left")
                                             .font(.title)
+                                            .bold()
                                             .foregroundColor(.black)
                                             .padding(.horizontal)
                                             .padding(.top, 20)
